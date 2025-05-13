@@ -22,3 +22,14 @@ export const signUpRequestBodySchema = z.object({
 	),
 });
 
+export const signInRequestBodySchema = z.object({
+	email: z.string().email("Email inválido"),
+	password: z
+		.string()
+		.min(8, "A senha deve ter no mínimo 8 caracteres")
+		.max(50, "A senha deve ter no máximo 50 caracteres"),
+});
+
+export const signInResponseSchema = z.object({
+	accessToken: z.string(),
+});
