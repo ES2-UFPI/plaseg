@@ -10,6 +10,7 @@ import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUI from "@fastify/swagger-ui";
 import fastifyJwt from "@fastify/jwt";
 import { errorHandler } from "./error-handler";
+import { authRoutes } from "./controllers/auth/auth.routes";
 
 const version = "1.0.0 - Release 1";
 
@@ -44,6 +45,8 @@ export function buildApp(app = fastify().withTypeProvider<ZodTypeProvider>()) {
 	app.register(fastifyJwt, {
 		secret: process.env.JWT_SECRET || "secret",
 	});
+
+	app.register(authRoutes);
 
 	return app;
 }
