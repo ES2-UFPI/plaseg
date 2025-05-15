@@ -1,6 +1,8 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 
-export function verifyUserRole(roleToVerify: "ADMIN" | "MUNICIPALITY") {
+export function verifyUserRole(
+	roleToVerify: "ADMIN" | "MUNICIPALITY" | "ADMIN_MASTER"
+) {
 	return async (request: FastifyRequest, reply: FastifyReply) => {
 		try {
 			await request.jwtVerify();
