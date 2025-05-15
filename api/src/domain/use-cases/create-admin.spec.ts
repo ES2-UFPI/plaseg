@@ -36,7 +36,7 @@ describe("Create Admin Use Case", () => {
 			password: admin.password,
 			requesterId: adminMaster.id.toString(),
 		});
-		console.log(result);
+		
 
 		expect(result.isRight()).toBeTruthy();
 		expect(inMemoryUsersRepository.items).toHaveLength(2);
