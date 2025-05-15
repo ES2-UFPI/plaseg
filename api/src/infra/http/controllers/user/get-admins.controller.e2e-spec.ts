@@ -4,7 +4,9 @@ import { prisma } from "../../../database/prisma/prisma";
 import fastify, { FastifyInstance } from "fastify";
 import { buildApp } from "../../app";
 import { hash } from "bcrypt";
-import { Role } from "@prisma/client";
+import { Role } from "../../../../domain/entities/value-objects/role";
+import { DomainRole } from "../../../../domain/entities/value-objects/role";
+import { User } from "../../../../domain/entities/user";
 
 describe("Get Admins (e2e)", () => {
 	let app: FastifyInstance;
@@ -24,7 +26,7 @@ describe("Get Admins (e2e)", () => {
 				password: await hash("12345678", 6),
 				phone: "86999999999",
 				document: "12345678900",
-				role: Role.ADMIN_MASTER,
+				role: DomainRole.ADMIN_MASTER,
 			},
 		});
 
@@ -46,7 +48,7 @@ describe("Get Admins (e2e)", () => {
 				password: await hash("12345678", 6),
 				phone: "86988887777",
 				document: "98765432100",
-				role: Role.ADMIN,
+				role: DomainRole.ADMIN,
 			},
 		});
 
@@ -57,7 +59,7 @@ describe("Get Admins (e2e)", () => {
 				password: await hash("12345678", 6),
 				phone: "86977776666",
 				document: "11122233344",
-				role: Role.ADMIN,
+				role: DomainRole.ADMIN,
 			},
 		});
 
@@ -68,7 +70,7 @@ describe("Get Admins (e2e)", () => {
 				password: await hash("12345678", 6),
 				phone: "86966665555",
 				document: "55566677788",
-				role: Role.MUNICIPALITY,
+				role: DomainRole.MUNICIPALITY,
 			},
 		});
 
@@ -80,13 +82,12 @@ describe("Get Admins (e2e)", () => {
 		expect(response.body.success).toBe(true);
 		expect(response.body.data).toHaveLength(2);
 
-		// Verificar se os dois admins estão na resposta
-		const emails = response.body.data.map((admin: any) => admin.email);
+		const emails = response.body.data.map((admin: User) => admin.email);
 		expect(emails).toContain("admin1@example.com");
 		expect(emails).toContain("admin2@example.com");
 
-		response.body.data.forEach((admin: any) => {
-			expect(admin.role).toBe("ADMIN");
+		response.body.data.forEach((admin: User) => {
+			expect(admin.role.toString()).toBe(Role.admin().toString());
 		});
 	});
 
@@ -98,7 +99,7 @@ describe("Get Admins (e2e)", () => {
 				password: await hash("12345678", 6),
 				phone: "86966665555",
 				document: "55566677788",
-				role: Role.MUNICIPALITY,
+				role: DomainRole.MUNICIPALITY,
 			},
 		});
 
@@ -119,7 +120,7 @@ describe("Get Admins (e2e)", () => {
 				password: await hash("12345678", 6),
 				phone: "86933332222",
 				document: "44433322211",
-				role: Role.MUNICIPALITY,
+				role: DomainRole.MUNICIPALITY,
 			},
 		});
 
