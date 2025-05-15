@@ -41,6 +41,13 @@ export class User extends Entity<UserProps> {
 		return this.props.role;
 	}
 
+	get createdAt() {
+		return this.props.createdAt;
+	}
+
+	get updatedAt() {
+		return this.props.updatedAt;
+	}
 	static create(
 		props: Optional<UserProps, "createdAt" | "role">,
 		id?: UniqueEntityID
