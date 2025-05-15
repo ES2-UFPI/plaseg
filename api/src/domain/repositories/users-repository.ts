@@ -5,4 +5,5 @@ export interface UsersRepository {
 	findByEmail(email: string): Promise<User | null>;
 	findByDocument(document: string): Promise<User | null>;
 	create(user: User): Promise<void>;
+	findManyAdmins(): Promise<User[]>;
 }
