@@ -10,6 +10,7 @@ datasource db {
 enum Role {
   ADMIN
   MUNICIPALITY
+  ADMIN_MASTER
 }
 
 model User {
