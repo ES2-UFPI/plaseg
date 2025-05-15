@@ -4,7 +4,7 @@ import { prisma } from "../../../database/prisma/prisma";
 import fastify, { FastifyInstance } from "fastify";
 import { buildApp } from "../../app";
 import { hash } from "bcrypt";
-import { Role } from "@prisma/client";
+import { DomainRole } from "../../../../domain/entities/value-objects/role";
 
 describe("Create Admin (e2e)", () => {
 	let app: FastifyInstance;
@@ -27,7 +27,7 @@ describe("Create Admin (e2e)", () => {
 				password: await hash("12345678", 6),
 				phone: "86999999999",
 				document: "12345678900",
-				role: Role.ADMIN_MASTER,
+				role: DomainRole.ADMIN_MASTER,
 			},
 		});
 
@@ -68,7 +68,7 @@ describe("Create Admin (e2e)", () => {
 		});
 
 		expect(createdAdmin).toBeTruthy();
-		expect(createdAdmin?.role).toBe(Role.ADMIN);
+		expect(createdAdmin?.role).toBe(DomainRole.ADMIN);
 	});
 
 	it("should not be able to create an admin with existing email", async () => {
@@ -79,7 +79,7 @@ describe("Create Admin (e2e)", () => {
 				password: await hash("12345678", 6),
 				phone: "86977776666",
 				document: "11122233344",
-				role: Role.MUNICIPALITY,
+				role: DomainRole.MUNICIPALITY,
 			},
 		});
 
@@ -106,7 +106,7 @@ describe("Create Admin (e2e)", () => {
 				password: await hash("12345678", 6),
 				phone: "86955554444",
 				document: "99988877766",
-				role: Role.MUNICIPALITY,
+				role: DomainRole.MUNICIPALITY,
 			},
 		});
 
@@ -133,7 +133,7 @@ describe("Create Admin (e2e)", () => {
 				password: await hash("12345678", 6),
 				phone: "86933332222",
 				document: "44433322211",
-				role: Role.MUNICIPALITY,
+				role: DomainRole.MUNICIPALITY,
 			},
 		});
 
