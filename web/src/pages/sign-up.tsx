@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export default function SignUp() {
+	
 	return (
 		<div className="w-full h-screen flex items-center justify-center">
 			<div className="bg-slate-50 w-1/2 h-full flex items-center justify-center">
