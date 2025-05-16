@@ -1,8 +1,35 @@
-export default function SignIn() {
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+export default function SignUp() {
 	return (
 		<div className="w-full h-screen flex items-center justify-center">
-			<div className="w-full max-w-md bg-white rounded-lg shadow-md p-4">
-				<h1 className="text-2xl font-bold">Sign In</h1>
+			<div className="bg-slate-50 w-1/2 h-full flex items-center justify-center">
+				<h1 className="text-4xl font-bold">Plaseg</h1>
+			</div>
+
+			<div className="w-1/2 h-full flex items-center justify-center">
+				<div className="flex flex-col gap-4 text-center">
+					<div>
+						<strong className="text-2xl">Conecte-se</strong>
+						<p className="">
+							Digite seu email e senha para entrar
+						</p>
+					</div>
+
+					<div className="space-y-2">
+						<Label>Email</Label>
+						<Input type="email" placeholder="Digite seu email" />
+					</div>
+
+					<div className="space-y-2">
+						<Label>Senha</Label>
+						<Input type="password" placeholder="Digite sua senha" />
+					</div>
+
+					<Button>Entrar</Button>
+				</div>
 			</div>
 		</div>
 	);
