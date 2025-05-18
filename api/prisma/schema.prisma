@@ -7,6 +7,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UnitType {
+  UF
+  MUNICIPALITY
+}
+
+enum EmploymentType {
+  CLT
+  PJ
+  OTHERS
+}
+
 enum Role {
   ADMIN
   MUNICIPALITY
@@ -21,8 +32,130 @@ model User {
   password String
   role     Role   @default(MUNICIPALITY)
 
+  municipality Municipality? @relation("UserMunicipality")
+
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
 
   @@map("users")
+}
+
+model Municipality {
+  id                 String   @id @default(uuid())
+  name               String
+  guardInitialDate   DateTime
+  guardCount         Int
+  trafficInitialDate DateTime
+  trafficCount       Int
+  federativeUnit     String
+  unitType           UnitType
+
+  userId String @unique
+  user   User   @relation("UserMunicipality", fields: [userId], references: [id])
+
+  allocationDepartments AllocationDepartment[]
+  maintenanceContracts  MaintenanceContract[]
+  qualifiedStaff        QualifiedStaff[]
+  projectPartnerships   ProjectPartnership[]
+  managements           Management[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@map("municipalities")
+}
+
+model AllocationDepartment {
+  id          String @id @default(uuid())
+  description String
+  address     String
+
+  municipalityId String
+  municipality   Municipality @relation(fields: [municipalityId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@map("allocation_departments")
+}
+
+model MaintenanceContract {
+  id          String @id @default(uuid())
+  description String
+  attachment  String
+
+  municipalityId String
+  municipality   Municipality @relation(fields: [municipalityId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@map("maintenance_contracts")
+}
+
+model QualifiedStaff {
+  id             String         @id @default(uuid())
+  name           String
+  sector         String
+  education      String
+  experience     String
+  employmentType EmploymentType
+  document       String
+  isResponsible  Boolean
+
+  municipalityId String
+  municipality   Municipality @relation(fields: [municipalityId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@map("qualified_staffs")
+}
+
+model ProjectPartnership {
+  id        String @id @default(uuid())
+  term      String
+  agency    String
+  objective String
+  status    String
+
+  municipalityId String
+  municipality   Municipality @relation(fields: [municipalityId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@map("project_partnerships")
+}
+
+model Management {
+  id          String   @id @default(uuid())
+  initialDate DateTime
+  endDate     DateTime
+
+  managerName    String
+  managerCpf     String
+  managerEmail   String
+  managerAddress String
+  managerPhone   String
+
+  adminManagerName    String
+  adminManagerCpf     String
+  adminManagerEmail   String
+  adminManagerAddress String
+  adminManagerPhone   String
+
+  legislationName    String
+  legislationCpf     String
+  legislationEmail   String
+  legislationAddress String
+  legislationPhone   String
+
+  municipalityId String
+  municipality   Municipality @relation(fields: [municipalityId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@map("managements")
 }
