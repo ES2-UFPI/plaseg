@@ -11,6 +11,7 @@ import fastifySwaggerUI from "@fastify/swagger-ui";
 import fastifyJwt from "@fastify/jwt";
 import { errorHandler } from "./error-handler";
 import { authRoutes } from "./controllers/auth/auth.routes";
+import { municipalityRoutes } from "./controllers/municipality/municipality.routes";
 
 const version = "1.0.0 - Release 1";
 
@@ -47,6 +48,7 @@ export function buildApp(app = fastify().withTypeProvider<ZodTypeProvider>()) {
 	});
 
 	app.register(authRoutes);
+	app.register(municipalityRoutes);
 
 	return app;
 }
