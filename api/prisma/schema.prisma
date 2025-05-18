@@ -56,7 +56,7 @@ model Municipality {
   allocationDepartments AllocationDepartment[]
   maintenanceContracts  MaintenanceContract[]
   qualifiedStaff        QualifiedStaff[]
-  projectPartnerships   ProjectPartnership[]
+  projectsPartnerships  ProjectPartnership[]
   managements           Management[]
 
   createdAt DateTime  @default(now())
@@ -71,7 +71,7 @@ model AllocationDepartment {
   address     String
 
   municipalityId String
-  municipality   Municipality @relation(fields: [municipalityId], references: [id])
+  municipality   Municipality @relation(fields: [municipalityId], references: [id], onDelete: Cascade)
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
@@ -85,7 +85,7 @@ model MaintenanceContract {
   attachment  String
 
   municipalityId String
-  municipality   Municipality @relation(fields: [municipalityId], references: [id])
+  municipality   Municipality @relation(fields: [municipalityId], references: [id], onDelete: Cascade)
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
@@ -104,7 +104,7 @@ model QualifiedStaff {
   isResponsible  Boolean
 
   municipalityId String
-  municipality   Municipality @relation(fields: [municipalityId], references: [id])
+  municipality   Municipality @relation(fields: [municipalityId], references: [id], onDelete: Cascade)
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
@@ -120,7 +120,7 @@ model ProjectPartnership {
   status    String
 
   municipalityId String
-  municipality   Municipality @relation(fields: [municipalityId], references: [id])
+  municipality   Municipality @relation(fields: [municipalityId], references: [id], onDelete: Cascade)
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
@@ -152,7 +152,7 @@ model Management {
   legislationPhone   String
 
   municipalityId String
-  municipality   Municipality @relation(fields: [municipalityId], references: [id])
+  municipality   Municipality @relation(fields: [municipalityId], references: [id], onDelete: Cascade)
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
