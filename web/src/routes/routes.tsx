@@ -1,4 +1,3 @@
-import App from "../App";
 
 import { Routes, Route } from "react-router";
 import { PrivateRoutes } from "./private-routes";
@@ -7,6 +6,7 @@ import { AuthRoutes } from "./auth-routes";
 import AuthLayout from "@/layout/auth-layout";
 
 import RegisterMunicipality from "@/pages/municipality/register-municipality";
+import AdminDashboard from "@/pages/admin/admin-dashboard";
 
 export function AppRoutes() {
 	return (
@@ -16,7 +16,7 @@ export function AppRoutes() {
 			</Route>
 
 			<Route element={<PrivateRoutes />}>
-				<Route path="/" element={<App />} />
+				<Route path="/" element={<AdminDashboard />} />
 				<Route path="/cadastrar-municipio" element={<RegisterMunicipality />} />
 			</Route>
 		</Routes>
