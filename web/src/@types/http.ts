@@ -1,7 +1,7 @@
 export interface HTTPSuccessResponse<T> {
 	success: true;
 	errors: null;
-    data:T;
+	data: T;
 }
 
 export interface HTTPErrorResponse {
@@ -9,3 +9,5 @@ export interface HTTPErrorResponse {
 	errors: string[];
 	data: null;
 }
+
+export type HTTPResponse<T> = HTTPSuccessResponse<T> | HTTPErrorResponse;
