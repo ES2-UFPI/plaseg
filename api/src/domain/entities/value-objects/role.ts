@@ -3,7 +3,10 @@ import { Role as PrismaRole } from "@prisma/client";
 export enum DomainRole {
 	ADMIN = "ADMIN",
 	MUNICIPALITY = "MUNICIPALITY",
+	ADMIN_MASTER = "ADMIN_MASTER",
 }
+
+export type RoleType = "ADMIN" | "MUNICIPALITY" |"ADMIN_MASTER";
 
 export class Role {
 	private readonly value: DomainRole;
@@ -22,6 +25,8 @@ export class Role {
 				return PrismaRole.ADMIN;
 			case DomainRole.MUNICIPALITY:
 				return PrismaRole.MUNICIPALITY;
+			case DomainRole.ADMIN_MASTER:
+				return PrismaRole.ADMIN_MASTER;
 			default:
 				throw new Error(`Invalid role: ${this.value}`);
 		}
@@ -35,7 +40,24 @@ export class Role {
 		return new Role(DomainRole.MUNICIPALITY);
 	}
 
+	public static adminMaster(): Role {
+		return new Role(DomainRole.ADMIN_MASTER);
+	}
+
 	public toString(): string {
 		return this.value;
+	}
+
+	public static fromString(role: string): Role {
+		switch (role) {
+			case DomainRole.ADMIN:
+				return Role.admin();
+			case DomainRole.MUNICIPALITY:
+				return Role.member();
+			case DomainRole.ADMIN_MASTER:
+				return Role.adminMaster();
+			default:
+				throw new Error(`Invalid role: ${role}`);
+		}
 	}
 }

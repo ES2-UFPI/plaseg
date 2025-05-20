@@ -21,6 +21,13 @@ enum EmploymentType {
 enum Role {
   ADMIN
   MUNICIPALITY
+  ADMIN_MASTER
+}
+
+enum TypeGroup {
+  SERVICE
+  OPPORTUNITY
+  CATEGORY
 }
 
 model User {
@@ -38,6 +45,21 @@ model User {
   updatedAt DateTime? @updatedAt
 
   @@map("users")
+}
+
+model Type {
+  id          String    @id @default(uuid())
+  description String    @unique
+  group       TypeGroup
+  parentId    String?
+
+  parent   Type?  @relation("TypeHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
+  children Type[] @relation("TypeHierarchy")
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@map("types")
 }
 
 model Municipality {

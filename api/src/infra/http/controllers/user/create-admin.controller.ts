@@ -1,23 +1,23 @@
 import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
+import { makeCreateAdminUseCase } from "../../../database/prisma/use-cases/make-create-admin-use-case";
 import { errorResponseSchema, successResponseSchema } from "../../schemas/http";
-import { createMunicipalityRequestBodySchema } from "../../schemas/municipality";
-import { makeCreateMunicipalityUseCase } from "../../../database/prisma/use-cases/make-create-municipality-use-case";
-import { verifyUserRole } from "../../middleware/verify-user-role";
 import { z } from "zod";
+import { verifyUserRole } from "../../middleware/verify-user-role";
+import { createAdminRequestBodySchema } from "../../schemas/admin";
 
-export async function createMunicipality(app: FastifyInstance) {
+export async function createAdmin(app: FastifyInstance) {
 	app.withTypeProvider<ZodTypeProvider>().post(
-		"/municipality",
+		"/admin/create",
 		{
-			onRequest: [verifyUserRole(["MUNICIPALITY"])],
+			onRequest: [verifyUserRole(["ADMIN_MASTER"])],
 			schema: {
-				tags: ["Municipality"],
-				operationId: "createMunicipality",
-				summary: "Create a new municipality",
+				tags: ["Admin"],
+				operationId: "createAdmin",
 				security: [{ bearerAuth: [] }],
-				body: createMunicipalityRequestBodySchema.describe(
-					"Create municipality request body"
+				summary: "Create a new admin",
+				body: createAdminRequestBodySchema.describe(
+					"Create admin request body"
 				),
 				response: {
 					201: successResponseSchema(z.null()).describe("Created"),
@@ -27,13 +27,15 @@ export async function createMunicipality(app: FastifyInstance) {
 			},
 		},
 		async (request, reply) => {
-			const body = createMunicipalityRequestBodySchema.parse(request.body);
+			const body = createAdminRequestBodySchema.parse(request.body);
 
-			const createMunicipalityUseCase = makeCreateMunicipalityUseCase();
+			const adminMasterId = request.user.sub;
 
-			const response = await createMunicipalityUseCase.execute({
+			const createAdminUseCase = makeCreateAdminUseCase();
+
+			const response = await createAdminUseCase.execute({
 				...body,
-				userId: request.user.sub,
+				requesterId: adminMasterId,
 			});
 
 			if (response.isLeft()) {
