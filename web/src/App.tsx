@@ -1,9 +1,7 @@
-function App() {
+export default function App() {
 	return (
 		<div className="w-full h-screen flex items-center justify-center">
-			<p>Hello World</p>
+			<strong className="text-2xl font-extrabold">Hello World</strong>
 		</div>
 	);
 }
-
-export default App;
