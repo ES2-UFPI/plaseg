@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { UseFormReturn } from "react-hook-form";
+import { type UseFormReturn } from "react-hook-form";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -16,7 +16,7 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import { FieldValues, Path } from "react-hook-form";
+import { type FieldValues, type Path } from "react-hook-form";
 import { ptBR } from "date-fns/locale";
 
 interface FormDatePickerProps<TFieldValues extends FieldValues> {

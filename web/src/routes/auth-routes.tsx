@@ -1,5 +1,5 @@
-import SignIn from "@/pages/sign-in";
-import SignUp from "@/pages/sign-up";
+import SignIn from "@/pages/auth/sign-in";
+import SignUp from "@/pages/auth/sign-up";
 import { Route, Routes } from "react-router";
 
 export function AuthRoutes() {

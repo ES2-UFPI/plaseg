@@ -6,6 +6,8 @@ import { AuthRoutes } from "./auth-routes";
 
 import AuthLayout from "@/layout/auth-layout";
 
+import RegisterMunicipality from "@/pages/municipality/register-municipality";
+
 export function AppRoutes() {
 	return (
 		<Routes>
@@ -15,6 +17,7 @@ export function AppRoutes() {
 
 			<Route element={<PrivateRoutes />}>
 				<Route path="/" element={<App />} />
+				<Route path="/cadastrar-municipio" element={<RegisterMunicipality />} />
 			</Route>
 		</Routes>
 	);
