@@ -1,11 +1,13 @@
-export interface HTTPSuccessResponse<T> {
+export type HTTPSuccessResponse<T> = {
 	success: true;
 	errors: null;
-    data:T;
-}
+	data: T;
+};
 
-export interface HTTPErrorResponse {
+export type HTTPErrorResponse = {
 	success: false;
 	errors: string[];
 	data: null;
-}
+};
+
+export type HTTPResponse<T> = HTTPSuccessResponse<T> | HTTPErrorResponse;

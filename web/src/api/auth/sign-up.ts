@@ -8,16 +8,11 @@ interface SignUpRequestBody {
 	password: string;
 }
 
-interface SignUpSuccessResponseBody extends HTTPSuccessResponse <null> {}
-
-type SignUpResponse = SignUpSuccessResponseBody | HTTPErrorResponse;
+type SignUpResponse = HTTPSuccessResponse<null> | HTTPErrorResponse;
 
 export async function signUp(body: SignUpRequestBody): Promise<SignUpResponse> {
 	try {
-		const response = await api.post<SignUpSuccessResponseBody>(
-			"/auth/sign-up",
-			body
-		);
+		const response = await api.post<SignUpResponse>("/auth/sign-up", body);
 
 		return response.data;
 	} catch (error) {
