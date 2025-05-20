@@ -1,7 +1,9 @@
-export default function AdminDashboard() {
+import { DashboardMenu } from "@/components/admin/dashboard-menu/dashboard-menu";
+
+export default function Dashboard() {
 	return (
-		<div className="w-full h-screen flex items-center justify-center">
-			<strong className="text-2xl font-extrabold">Dashboard do Admin</strong>
+		<div className="flex flex-col py-4 md:py-6 gap-6 h-full box-content">
+			<DashboardMenu />
 		</div>
 	);
 }
