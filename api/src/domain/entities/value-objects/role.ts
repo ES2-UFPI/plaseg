@@ -6,6 +6,8 @@ export enum DomainRole {
 	ADMIN_MASTER = "ADMIN_MASTER",
 }
 
+export type RoleType = "ADMIN" | "MUNICIPALITY" |"ADMIN_MASTER";
+
 export class Role {
 	private readonly value: DomainRole;
 
@@ -44,5 +46,18 @@ export class Role {
 
 	public toString(): string {
 		return this.value;
+	}
+
+	public static fromString(role: string): Role {
+		switch (role) {
+			case DomainRole.ADMIN:
+				return Role.admin();
+			case DomainRole.MUNICIPALITY:
+				return Role.member();
+			case DomainRole.ADMIN_MASTER:
+				return Role.adminMaster();
+			default:
+				throw new Error(`Invalid role: ${role}`);
+		}
 	}
 }
