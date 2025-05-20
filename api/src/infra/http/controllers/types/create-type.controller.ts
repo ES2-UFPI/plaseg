@@ -10,7 +10,7 @@ export async function createType(app: FastifyInstance) {
 	app.withTypeProvider<ZodTypeProvider>().post(
 		"/types",
 		{
-			onRequest: [verifyUserRole("ADMIN")],
+			onRequest: [verifyUserRole(["ADMIN"])],
 			schema: {
 				tags: ["Types"],
 				operationId: "createType",
