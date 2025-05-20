@@ -55,10 +55,12 @@ model Type {
 
   parent   Type?  @relation("TypeHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
   children Type[] @relation("TypeHierarchy")
-  
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
   @@map("types")
 }
-
 
 model Municipality {
   id                 String   @id @default(uuid())

@@ -9,7 +9,7 @@ export async function getAdmins(app: FastifyInstance) {
 	app.withTypeProvider<ZodTypeProvider>().get(
 		"/admin",
 		{
-			onRequest: [verifyUserRole("ADMIN_MASTER")],
+			onRequest: [verifyUserRole(["ADMIN_MASTER"])],
 			schema: {
 				tags: ["Admin"],
 				operationId: "getAdmins",

@@ -10,7 +10,7 @@ export async function createAdmin(app: FastifyInstance) {
 	app.withTypeProvider<ZodTypeProvider>().post(
 		"/admin/create",
 		{
-			onRequest: [verifyUserRole("ADMIN_MASTER")],
+			onRequest: [verifyUserRole(["ADMIN_MASTER"])],
 			schema: {
 				tags: ["Admin"],
 				operationId: "createAdmin",

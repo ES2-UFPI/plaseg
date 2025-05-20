@@ -10,7 +10,7 @@ export async function createMunicipality(app: FastifyInstance) {
 	app.withTypeProvider<ZodTypeProvider>().post(
 		"/municipality",
 		{
-			onRequest: [verifyUserRole("MUNICIPALITY")],
+			onRequest: [verifyUserRole(["MUNICIPALITY"])],
 			schema: {
 				tags: ["Municipality"],
 				operationId: "createMunicipality",
