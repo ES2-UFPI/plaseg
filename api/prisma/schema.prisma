@@ -56,6 +56,8 @@ model Type {
   parent   Type?  @relation("TypeHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
   children Type[] @relation("TypeHierarchy")
 
+  baseProducts  BaseProduct[]
+
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
 
@@ -180,4 +182,26 @@ model Management {
   updatedAt DateTime? @updatedAt
 
   @@map("managements")
+}
+
+model BaseProduct {
+  id                   String   @id @default(uuid())
+  code                 String   @unique
+  name                 String
+  technicalDescription String
+  budget1              Decimal
+  budget1Validity      DateTime
+  budget2              Decimal
+  budget2Validity      DateTime
+  budget3              Decimal
+  budget3Validity      DateTime
+  unitValue            Decimal
+
+  Type   Type   @relation(fields: [typeId], references: [id], onDelete: Cascade)
+  typeId String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@map("base_products")
 }
