@@ -56,6 +56,8 @@ model Type {
   parent   Type?  @relation("TypeHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
   children Type[] @relation("TypeHierarchy")
 
+   opportunities Opportunity[]
+
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
 
@@ -180,4 +182,43 @@ model Management {
   updatedAt DateTime? @updatedAt
 
   @@map("managements")
+}
+
+model RequiredDocument {
+  id          String   @id @default(uuid())
+  name        String 
+  description String  
+  model       String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id])
+  opportunityId String
+
+  @@map("required_documents")
+}
+
+model Opportunity {
+  id                    String   @id @default(uuid()) @map("id")
+  title                 String   @unique
+  description           String
+  availableValue        Decimal
+  minValue              Decimal
+  maxValue              Decimal
+  initialDeadline       DateTime
+  finalDeadline         DateTime
+  requiresCounterpart   Boolean
+  counterpartPercentage Decimal
+  isActive              Boolean  @default(true)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  Type   Type   @relation(fields: [typeId], references: [id])
+  typeId String
+
+  requiredDocuments RequiredDocument[]
+
+  @@map("opportunities")
 }
