@@ -202,6 +202,8 @@ model RequiredDocument {
 model Opportunity {
   id                    String   @id @default(uuid()) @map("id")
   title                 String   @unique
+  slug                  String   @unique
+  responsibleAgency     String
   description           String
   availableValue        Decimal
   minValue              Decimal
@@ -209,13 +211,14 @@ model Opportunity {
   initialDeadline       DateTime
   finalDeadline         DateTime
   requiresCounterpart   Boolean
-  counterpartPercentage Decimal
+  counterpartPercentage Decimal?
   isActive              Boolean  @default(true)
+  releasedForAll        Boolean  @default(false)
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
 
-  Type   Type   @relation(fields: [typeId], references: [id])
+  Type   Type   @relation(fields: [typeId], references: [id], onDelete: Cascade)
   typeId String
 
   requiredDocuments RequiredDocument[]
