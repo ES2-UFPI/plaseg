@@ -3,19 +3,24 @@ import { UniqueEntityID } from "../../core/entities/unique-entity-id";
 import { Optional } from "../../core/types/optional";
 import { getCurrentDate } from "../../core/utils/get-current-date";
 import { RequiredDocument } from "./required-document";
+import { Slug } from "./value-objects/slug";
 
 export interface OpportunityProps {
 	title: string;
+	slug: Slug;
 	description: string;
+	responsibleAgency: string;
 	availableValue: number;
 	minValue: number;
 	maxValue: number;
 	initialDeadline: Date;
 	finalDeadline: Date;
 	requiresCounterpart: boolean;
-	counterpartPercentage: number;
+	counterpartPercentage?: number;
 	requiredDocuments: RequiredDocument[];
 	isActive: boolean;
+	releasedForAll?: boolean;
+	type: string;
 	typeId: string;
 	createdAt: Date;
 	updatedAt?: Date | null;
@@ -26,8 +31,16 @@ export class Opportunity extends Entity<OpportunityProps> {
 		return this.props.title;
 	}
 
+	get slug() {
+		return this.props.slug;
+	}
+
 	get description() {
 		return this.props.description;
+	}
+
+	get responsibleAgency() {
+		return this.props.responsibleAgency;
 	}
 
 	get availableValue() {
@@ -62,6 +75,10 @@ export class Opportunity extends Entity<OpportunityProps> {
 		return this.props.isActive;
 	}
 
+	get releasedForAll() {
+		return this.props.releasedForAll;
+	}
+
 	get createdAt() {
 		return this.props.createdAt;
 	}
@@ -73,8 +90,13 @@ export class Opportunity extends Entity<OpportunityProps> {
 	get requiredDocuments() {
 		return this.props.requiredDocuments;
 	}
+
 	get typeId() {
 		return this.props.typeId;
+	}
+
+	get type() {
+		return this.props.type;
 	}
 
 	set requiredDocuments(requiredDocuments: RequiredDocument[]) {
@@ -88,17 +110,18 @@ export class Opportunity extends Entity<OpportunityProps> {
 	static create(
 		props: Optional<
 			OpportunityProps,
-			"createdAt" | "requiredDocuments" | "updatedAt" | "isActive"
+			"isActive" | "slug" | "createdAt" | "updatedAt" | "releasedForAll"
 		>,
 		id?: UniqueEntityID
 	) {
 		const opportunity = new Opportunity(
 			{
 				...props,
+				slug: props.slug ?? Slug.createFromText(props.title),
+				isActive: props.isActive ?? true,
 				createdAt: props.createdAt ?? getCurrentDate(),
 				updatedAt: props.updatedAt ?? null,
-				requiredDocuments: props.requiredDocuments ?? [],
-				isActive: props.isActive ?? true,
+				releasedForAll: props.releasedForAll ?? false,
 			},
 			id
 		);
