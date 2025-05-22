@@ -1,132 +1,87 @@
-import { Entity } from "../../core/entities/entity";
-import { UniqueEntityID } from "../../core/entities/unique-entity-id";
-import { Optional } from "../../core/types/optional";
-import { getCurrentDate } from "../../core/utils/get-current-date";
+import { CustomError } from "../../core/errors/custom-error";
+import { Either, left, right } from "../../core/types/either";
+import { Opportunity } from "../entities/opportunity";
 import { RequiredDocument } from "../entities/required-document";
-import { Slug } from "../entities/value-objects/slug";
+import { TypeGroup } from "../entities/value-objects/type-group";
+import { OpportunitiesRepository } from "../repositories/opportunities-repository";
+import { TypesRepository } from "../repositories/types-repository";
 
 
-export interface OpportunityProps {
-	title: string;
-	slug: Slug;
+type RequiredDocumentRequest = {
+	name: string;
 	description: string;
-	responsibleAgency: string;
+	model: string;
+};
+
+type CreateOpportunityUseCaseRequest = {
+	title: string;
+	description: string;
 	availableValue: number;
+	responsibleAgency: string;
 	minValue: number;
 	maxValue: number;
 	initialDeadline: Date;
 	finalDeadline: Date;
 	requiresCounterpart: boolean;
 	counterpartPercentage?: number;
-	requiredDocuments: RequiredDocument[];
-	isActive: boolean;
 	releasedForAll?: boolean;
 	type: string;
 	typeId: string;
-	createdAt: Date;
-	updatedAt?: Date | null;
-}
+	requiredDocuments: RequiredDocumentRequest[];
+};
 
-export class Opportunity extends Entity<OpportunityProps> {
-	get title() {
-		return this.props.title;
+type CreateOpportunityUseCaseResponse = Either<
+	CustomError,
+	{
+		opportunity: Opportunity;
 	}
+>;
 
-	get slug() {
-		return this.props.slug;
-	}
+export class CreateOpportunityUseCase {
+	constructor(
+		private opportunityRepository: OpportunitiesRepository,
+		private typesRepository: TypesRepository
+	) {}
 
-	get description() {
-		return this.props.description;
-	}
+	async execute(
+		request: CreateOpportunityUseCaseRequest
+	): Promise<CreateOpportunityUseCaseResponse> {
+		const doesOpportunityAlreadyExist =
+			await this.opportunityRepository.findByTitle(request.title);
 
-	get responsibleAgency() {
-		return this.props.responsibleAgency;
-	}
+		if (doesOpportunityAlreadyExist) {
+			return left(new CustomError(409, "Título já cadastrado"));
+		}
 
-	get availableValue() {
-		return this.props.availableValue;
-	}
+		const type = await this.typesRepository.findById(request.typeId);
 
-	get minValue() {
-		return this.props.minValue;
-	}
+		if (!type) {
+			return left(new CustomError(404, "Tipo não encontrado"));
+		}
 
-	get maxValue() {
-		return this.props.maxValue;
-	}
+		if (type.group.getValue() !== TypeGroup.opportunity().getValue()) {
+			return left(
+				new CustomError(400, "O tipo selecionado não é uma oportunidade")
+			);
+		}
 
-	get initialDeadline() {
-		return this.props.initialDeadline;
-	}
-
-	get finalDeadline() {
-		return this.props.finalDeadline;
-	}
-
-	get requiresCounterpart() {
-		return this.props.requiresCounterpart;
-	}
-
-	get counterpartPercentage() {
-		return this.props.counterpartPercentage;
-	}
-
-	get isActive() {
-		return this.props.isActive;
-	}
-
-	get releasedForAll() {
-		return this.props.releasedForAll;
-	}
-
-	get createdAt() {
-		return this.props.createdAt;
-	}
-
-	get updatedAt() {
-		return this.props.updatedAt;
-	}
-
-	get requiredDocuments() {
-		return this.props.requiredDocuments;
-	}
-
-	get typeId() {
-		return this.props.typeId;
-	}
-
-	get type() {
-		return this.props.type;
-	}
-
-	set requiredDocuments(requiredDocuments: RequiredDocument[]) {
-		this.props.requiredDocuments = requiredDocuments;
-	}
-
-	addRequiredDocument(requiredDocument: RequiredDocument) {
-		this.props.requiredDocuments.push(requiredDocument);
-	}
-
-	static create(
-		props: Optional<
-			OpportunityProps,
-			"isActive" | "slug" | "createdAt" | "updatedAt" | "releasedForAll"
-		>,
-		id?: UniqueEntityID
-	) {
-		const opportunity = new Opportunity(
-			{
-				...props,
-				slug: props.slug ?? Slug.createFromText(props.title),
-				isActive: props.isActive ?? true,
-				createdAt: props.createdAt ?? getCurrentDate(),
-				updatedAt: props.updatedAt ?? null,
-				releasedForAll: props.releasedForAll ?? false,
-			},
-			id
+		const requiredDocuments = request.requiredDocuments.map((document) =>
+			RequiredDocument.create({
+				name: document.name,
+				description: document.description,
+				model: document.model,
+			})
 		);
 
-		return opportunity;
+		const opportunity = Opportunity.create({
+			...request,
+			requiredDocuments,
+		});
+
+		await this.opportunityRepository.create(opportunity);
+
+		return right({
+			opportunity,
+		});
 	}
 }
