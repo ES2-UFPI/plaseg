@@ -4,9 +4,9 @@ import { ArrowDown, ArrowUp, Eye } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { translateBaseProductsTableKeys } from "@/utils/translate-base-products-table-keys";
 import { BaseProduct } from "@/@types/admin/base-product";
+import { Tag } from "@/components/ui/tag";
 import { formatDate } from "@/utils/format-date";
 import { formatCurrency } from "@/utils/format-currency";
-import { Tag } from "@/components/ui/tag";
 
 export const baseProductsTableColumns: ColumnDef<BaseProduct>[] = [
 	{
@@ -167,17 +167,13 @@ export const baseProductsTableColumns: ColumnDef<BaseProduct>[] = [
 	{
 		id: "actions",
 		header: "Ações",
-		cell: ({ row }) => {
-			const baseProduct = row.original;
-
+		cell: () => {
 			return (
 				<div className="flex items-center gap-4">
 					<Button variant="outline" size="icon" disabled>
 						<Eye className="h-4 w-4" />
 						<span className="sr-only">Ver detalhes</span>
 					</Button>
-
-					<EditBaseProductSheet baseProduct={baseProduct} />
 				</div>
 			);
 		},

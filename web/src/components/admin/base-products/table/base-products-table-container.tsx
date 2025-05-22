@@ -18,10 +18,6 @@ import { translateBaseProductsTableKeys } from "@/utils/translate-base-products-
 import { BaseProductsTable } from "./base-products-table";
 import { TablePagination } from "@/components/table/table-footer";
 import { TableHideColumnsDropDown } from "@/components/table/table-hide-columns-dropdown";
-import { CreateBaseProductSheet } from "../modals/create-base-product-sheet";
-import { useGetBaseProducts } from "@/hooks/admin/base-products/use-get-base-products";
-import { useGetTypes } from "@/hooks/admin/types/use-get-types";
-import { TypeGroup } from "@/@types/admin/type";
 import { TableCombobox } from "@/components/table/table-combobox";
 
 export function BaseProductsTableContainer() {
@@ -37,13 +33,9 @@ export function BaseProductsTableContainer() {
 	const [columnVisibility, setColumnVisibility] =
 		React.useState<VisibilityState>({});
 	const [rowSelection, setRowSelection] = React.useState({});
-	const { baseProducts, isLoadingGetBaseProducts } = useGetBaseProducts();
-	const { types } = useGetTypes({
-		group: TypeGroup.CATEGORY,
-	});
 
 	const table = useReactTable({
-		data: baseProducts,
+		data: [],
 		columns: baseProductsTableColumns,
 		onSortingChange: setSorting,
 		onColumnFiltersChange: setColumnFilters,
@@ -85,10 +77,12 @@ export function BaseProductsTableContainer() {
 					placeholder="Categoria"
 					translatedEntity="Categoria"
 					onChange={(value) => table.getColumn("type")?.setFilterValue(value)}
-					options={types.map((type) => ({
-						label: type.description,
-						value: type.id,
-					}))}
+					options={[
+						{
+							label: "Categoria",
+							value: "category"
+						}
+					]}
 				/>
 
 				<Button
@@ -105,13 +99,15 @@ export function BaseProductsTableContainer() {
 					translateFunction={translateBaseProductsTableKeys}
 				/>
 
-				<CreateBaseProductSheet className="bg-primary hover:bg-primary/90" />
+				<Button>
+					Adicionar Produto Base
+				</Button>
 			</div>
 
 			<BaseProductsTable
 				table={table}
-				isLoadingGetBaseProducts={isLoadingGetBaseProducts}
-				data={baseProducts}
+				isLoadingGetBaseProducts={false}
+				data={[]}
 			/>
 
 			<TablePagination table={table} />
