@@ -15,6 +15,7 @@ import { adminRoutes } from "./controllers/user/admin.routes";
 import { typesRoutes } from "./controllers/types/types.routes";
 import { municipalityRoutes } from "./controllers/municipality/municipality.routes";
 import { opportunitiesRoutes } from "./controllers/opportunities/opportunity.routes";
+import { productsRoutes } from "./controllers/products/products.routes";
 
 const version = "1.0.0 - Release 1";
 
@@ -54,7 +55,8 @@ export function buildApp(app = fastify().withTypeProvider<ZodTypeProvider>()) {
 	app.register(adminRoutes);
 	app.register(typesRoutes);
 	app.register(municipalityRoutes);
-	app.register(opportunitiesRoutes)
+	app.register(opportunitiesRoutes);
+	app.register(productsRoutes);
 
 	return app;
 }
