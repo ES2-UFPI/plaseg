@@ -30,7 +30,9 @@ export const createOpportunityRequestBodySchema = z
 		counterpartPercentage: z
 			.number()
 			.min(0, "A porcentagem de contrapartida deve ser maior ou igual a 0")
-			.max(100, "A porcentagem de contrapartida deve ser menor ou igual a 100"),
+			.max(100, "A porcentagem de contrapartida deve ser menor ou igual a 100")
+			.nullable()
+			.optional(),
 		isActive: z.boolean().default(true),
 		requiredDocuments: z
 			.array(requiredDocumentSchema)
@@ -63,6 +65,19 @@ export const createOpportunityRequestBodySchema = z
 		{
 			message: "O valor disponível deve ser maior ou igual ao valor mínimo",
 			path: ["availableValue"],
+		}
+	)
+	.refine(
+		(data) => {
+			if (data.requiresCounterpart && !data.counterpartPercentage) {
+				return false;
+			}
+			return true;
+		},
+		{
+			message:
+				"A porcentagem de contrapartida é obrigatória quando requiresCounterpart é true",
+			path: ["counterpartPercentage"],
 		}
 	);
 
