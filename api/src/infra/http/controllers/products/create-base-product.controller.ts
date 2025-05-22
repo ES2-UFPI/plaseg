@@ -10,7 +10,7 @@ export async function createBaseProduct(app: FastifyInstance) {
 	app.withTypeProvider<ZodTypeProvider>().post(
 		"/base-products",
 		{
-			onRequest: [verifyUserRole(["ADMIN", "ADMIN_MASTER"])],
+			onRequest: [verifyUserRole(["ADMIN", "ADMIN_MASTER", "MUNICIPALITY"])],
 			schema: {
 				tags: ["Base Products"],
 				operationId: "createBaseProduct",
