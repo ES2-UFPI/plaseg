@@ -7,6 +7,7 @@ import AuthLayout from "@/layout/auth-layout";
 
 import RegisterMunicipality from "@/pages/municipality/register-municipality";
 import AdminDashboard from "@/pages/admin/admin-dashboard";
+import BaseProducts from "@/pages/admin/base-products";
 
 export function AppRoutes() {
 	return (
@@ -17,6 +18,7 @@ export function AppRoutes() {
 
 			<Route element={<PrivateRoutes />}>
 				<Route path="/" element={<AdminDashboard />} />
+				<Route path="/admin/produtos-base" element={<BaseProducts />} />
 				<Route path="/cadastrar-municipio" element={<RegisterMunicipality />} />
 			</Route>
 		</Routes>
