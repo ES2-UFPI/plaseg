@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const envSchema = z.object({
-	VITE_DATABASE_URL: z.string(),
+	VITE_DATABASE_URL: z.string().url(),
 	VITE_SECRET: z.string(),
 	VITE_AXIOS_DELAY: z
 		.string()

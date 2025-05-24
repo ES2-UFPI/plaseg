@@ -7,10 +7,10 @@ export const api = axios.create({
 });
 
 api.interceptors.request.use(async (config) => {
-	const access_token = Cookies.get("access_token");
+	const accessToken = Cookies.get("accessToken");
 
-	if (access_token) {
-		config.headers.Authorization = `Bearer ${access_token}`;
+	if (accessToken) {
+		config.headers.Authorization = `Bearer ${accessToken}`;
 	}
 
 	if (env.VITE_AXIOS_DELAY === true) {

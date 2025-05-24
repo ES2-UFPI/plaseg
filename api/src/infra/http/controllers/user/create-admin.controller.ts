@@ -8,7 +8,7 @@ import { createAdminRequestBodySchema } from "../../schemas/admin";
 
 export async function createAdmin(app: FastifyInstance) {
 	app.withTypeProvider<ZodTypeProvider>().post(
-		"/admin/create",
+		"/admin",
 		{
 			onRequest: [verifyUserRole(["ADMIN_MASTER"])],
 			schema: {

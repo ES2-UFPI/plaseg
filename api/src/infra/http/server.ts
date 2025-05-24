@@ -6,5 +6,5 @@ app
 		port: Number(process.env.PORT) || 3333,
 	})
 	.then(() => {
-		console.log("🚀 HTTP Server Running!");
+		console.log(`🚀 HTTP Server Running at ${process.env.PORT}`);
 	});

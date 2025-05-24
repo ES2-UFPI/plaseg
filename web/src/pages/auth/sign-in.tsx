@@ -15,7 +15,7 @@ export default function SignIn() {
 				<SignInForm />
 
 				<Link
-					to="/esqueceu-senha"
+					to="/resetar-senha"
 					className="text-sm font-medium hover:underline"
 				>
 					Esqueceu sua senha? Clique aqui
