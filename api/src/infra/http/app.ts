@@ -52,9 +52,9 @@ export function buildApp(app = fastify().withTypeProvider<ZodTypeProvider>()) {
 	});
 
 	app.register(authRoutes);
+	app.register(municipalityRoutes);
 	app.register(adminRoutes);
 	app.register(typesRoutes);
-	app.register(municipalityRoutes);
 	app.register(opportunitiesRoutes);
 	app.register(productsRoutes);
 

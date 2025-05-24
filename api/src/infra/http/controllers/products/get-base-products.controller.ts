@@ -11,7 +11,7 @@ export async function getBaseProduct(app: FastifyInstance) {
 		{
 			onRequest: [verifyUserRole(["ADMIN", "ADMIN_MASTER", "MUNICIPALITY"])],
 			schema: {
-				tags: ["Get Products"],
+				tags: ["Base Products"],
 				operationId: "getBaseProduct",
 				summary: "Get base product",
 				security: [{ bearerAuth: [] }],
@@ -36,7 +36,7 @@ export async function getBaseProduct(app: FastifyInstance) {
 					data: null,
 				});
             }
-            
+
             console.log(result)
 
 			return reply.status(200).send({
