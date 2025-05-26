@@ -247,4 +247,24 @@ model BaseProduct {
   updatedAt DateTime? @updatedAt
 
   @@map("base_products")
+  SpecificProduct SpecificProduct[]
+}
+
+model SpecificProduct {
+  id             String   @id @default(uuid())
+  brand          String
+  model          String
+  description    String
+  unitValue      Decimal
+  warrantyMonths Int
+  budget         Decimal
+  budgetValidity DateTime
+
+  baseProduct   BaseProduct @relation(fields: [baseProductId], references: [id], onDelete: Cascade)
+  baseProductId String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@map("specific_products")
 }
