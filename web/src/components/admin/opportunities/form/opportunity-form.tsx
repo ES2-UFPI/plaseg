@@ -6,6 +6,7 @@ import { FormMoneyInput } from "@/components/form/form-money-input";
 import { Label } from "@/components/ui/label";
 import { LoaderCircle } from "lucide-react";
 import { useCreateOpportunity } from "@/hooks/admin/opportunities/use-create-opportunity";
+import { Input } from "@/components/ui/input";
 
 interface OpportunityFormProps {
 	setIsOpportunitySheetOpen: (open: boolean) => void;
@@ -64,10 +65,30 @@ export function OpportunityForm({
 					/>
 
 					<div className="col-span-3 flex flex-col gap-2">
-						<div className="flex items-center">
-							<Label>Documentação Obrigatória</Label>
-							<span className="text-destructive ml-1">*</span>
+						<Label>Documentação Obrigatória</Label>
+
+						<div className="flex flex-col gap-4 p-6 border rounded-lg">
+							<div className="flex flex-col gap-2">
+								<Label className="">Nome do documento</Label>
+								<Input placeholder="Digite o nome do documento" />
+							</div>
+
+							<div className="flex flex-col gap-2">
+								<Label className="">Descrição</Label>
+								<Input placeholder="Digite a descrição do documento" />
+							</div>
+
+							<div className="flex flex-col gap-2">
+								<Label className="">Url do modelo</Label>
+								<Input placeholder="Digite a url do modelo" />
+							</div>
 						</div>
+					</div>
+
+					<div className="flex col-span-3 justify-end">
+						<Button>
+							Adicionar Documento
+						</Button>
 					</div>
 				</div>
 

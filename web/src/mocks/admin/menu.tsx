@@ -31,9 +31,8 @@ export const adminMenuItems: MenuItem[] = [
 		description:
 			"Cadastre, edite e gerencie as oportunidades de financiamento que os municípios poderão acessar.",
 		url: "/admin/oportunidades",
-		ready: false,
+		ready: true,
 	},
-
 	{
 		icon: <Package size={24} className="text-blue-500" />,
 		title: "Produtos Base",
@@ -44,11 +43,11 @@ export const adminMenuItems: MenuItem[] = [
 	},
 	{
 		icon: <Barcode size={24} className="text-blue-500" />,
-		title: "Produtos",
+		title: "Produtos Específicos",
 		description:
 			"Cadastre, edite e gerencie os produtos que serão oferecidos nos projetos.",
-		url: "/admin/produtos",
-		ready: false,
+		url: "/admin/produtos-especificos",
+		ready: true,
 	},
 	{
 		icon: <UserCog size={24} className="text-blue-500" />,
