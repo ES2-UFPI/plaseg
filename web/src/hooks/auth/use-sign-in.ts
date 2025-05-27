@@ -1,8 +1,8 @@
-import { useMutation } from "@tanstack/react-query";
+import { signInRequestSchema } from "@/@schemas/auth";
 import { signIn } from "@/api/auth/sign-in";
 import { useAuthStore } from "@/stores/auth";
+import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { signInRequestSchema } from "@/@schemas/auth";
 import { useFormMutation } from "../common/use-form-mutation";
 
 export function useSignIn() {
@@ -27,9 +27,9 @@ export function useSignIn() {
 				return;
 			}
 
-			response.errors.forEach((error) => {
+			for (const error of response.errors) {
 				toast.error(error);
-			});
+			}
 		},
 	});
 

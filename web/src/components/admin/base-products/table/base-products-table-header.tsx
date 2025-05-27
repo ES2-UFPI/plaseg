@@ -35,7 +35,7 @@ export function BaseProductsTableHeader({
 									: flexRender(
 											header.column.columnDef.header,
 											header.getContext()
-									  )}
+										)}
 							</TableHead>
 						);
 					})}

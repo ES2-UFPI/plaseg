@@ -45,7 +45,7 @@ describe("Create Admin (e2e)", () => {
 
 	it("should be able to create a new admin", async () => {
 		const response = await request(app.server)
-			.post("/admin/create")
+			.post("/admin")
 			.set("Authorization", `Bearer ${adminMasterToken}`)
 			.send({
 				name: "New Admin",
@@ -84,7 +84,7 @@ describe("Create Admin (e2e)", () => {
 		});
 
 		const response = await request(app.server)
-			.post("/admin/create")
+			.post("/admin")
 			.set("Authorization", `Bearer ${adminMasterToken}`)
 			.send({
 				name: "Duplicate Admin",
@@ -111,7 +111,7 @@ describe("Create Admin (e2e)", () => {
 		});
 
 		const response = await request(app.server)
-			.post("/admin/create")
+			.post("/admin")
 			.set("Authorization", `Bearer ${adminMasterToken}`)
 			.send({
 				name: "Document Admin",
@@ -143,7 +143,7 @@ describe("Create Admin (e2e)", () => {
 		});
 
 		const response = await request(app.server)
-			.post("/admin/create")
+			.post("/admin")
 			.set("Authorization", `Bearer ${regularUserToken}`)
 			.send({
 				name: "Unauthorized Admin",

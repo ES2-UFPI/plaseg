@@ -1,12 +1,12 @@
-import { MultiSelect } from "@/components/ui/multi-select";
 import {
+	FormControl,
 	FormField,
 	FormItem,
 	FormLabel,
-	FormControl,
 	FormMessage,
 } from "@/components/ui/form";
-import { FieldValues, Path, UseFormReturn } from "react-hook-form";
+import { MultiSelect } from "@/components/ui/multi-select";
+import type { FieldValues, Path, UseFormReturn } from "react-hook-form";
 
 interface FormMultiSelectProps<TFieldValues extends FieldValues> {
 	form: UseFormReturn<TFieldValues>;

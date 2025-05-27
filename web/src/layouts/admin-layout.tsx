@@ -1,7 +1,7 @@
 import { Header } from "@/components/header/header";
-import { AppLayout } from "@/layouts/app-layout";
 import { Navbar } from "@/components/navbar/navbar";
 import { NavbarItem } from "@/components/navbar/navbar-item";
+import { AppLayout } from "@/layouts/app-layout";
 import { LayoutDashboard } from "lucide-react";
 
 export default function AdminLayout() {

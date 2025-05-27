@@ -1,4 +1,3 @@
-"use client";
 import * as React from "react";
 import {
 	ColumnFiltersState,
@@ -18,6 +17,10 @@ import { translateBaseProductsTableKeys } from "@/utils/translate-base-products-
 import { BaseProductsTable } from "./base-products-table";
 import { TablePagination } from "@/components/table/table-footer";
 import { TableHideColumnsDropDown } from "@/components/table/table-hide-columns-dropdown";
+import { CreateBaseProductSheet } from "../modals/create-base-product-sheet";
+import { useGetBaseProducts } from "@/hooks/admin/base-products/use-get-base-products";
+import { useGetTypes } from "@/hooks/admin/types/use-get-types";
+import { TypeGroup } from "@/@types/admin/type";
 import { TableCombobox } from "@/components/table/table-combobox";
 
 export function BaseProductsTableContainer() {
@@ -33,9 +36,13 @@ export function BaseProductsTableContainer() {
 	const [columnVisibility, setColumnVisibility] =
 		React.useState<VisibilityState>({});
 	const [rowSelection, setRowSelection] = React.useState({});
+	const { baseProducts, isLoadingGetBaseProducts } = useGetBaseProducts();
+	const { types } = useGetTypes({
+		group: TypeGroup.CATEGORY,
+	});
 
 	const table = useReactTable({
-		data: [],
+		data: baseProducts,
 		columns: baseProductsTableColumns,
 		onSortingChange: setSorting,
 		onColumnFiltersChange: setColumnFilters,
@@ -77,12 +84,10 @@ export function BaseProductsTableContainer() {
 					placeholder="Categoria"
 					translatedEntity="Categoria"
 					onChange={(value) => table.getColumn("type")?.setFilterValue(value)}
-					options={[
-						{
-							label: "Categoria",
-							value: "category"
-						}
-					]}
+					options={types.map((type) => ({
+						label: type.description,
+						value: type.id,
+					}))}
 				/>
 
 				<Button
@@ -99,15 +104,13 @@ export function BaseProductsTableContainer() {
 					translateFunction={translateBaseProductsTableKeys}
 				/>
 
-				<Button>
-					Adicionar Produto Base
-				</Button>
+				<CreateBaseProductSheet className="bg-primary hover:bg-primary/90" />
 			</div>
 
 			<BaseProductsTable
 				table={table}
-				isLoadingGetBaseProducts={false}
-				data={[]}
+				isLoadingGetBaseProducts={isLoadingGetBaseProducts}
+				data={baseProducts}
 			/>
 
 			<TablePagination table={table} />

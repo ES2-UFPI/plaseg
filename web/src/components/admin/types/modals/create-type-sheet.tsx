@@ -32,7 +32,7 @@ export function CreateTypeSheet({ className }: CreateTypeSheetProps) {
 				</Button>
 			</SheetTrigger>
 
-			<SheetContent className="w-full md:max-w-[500px] outline-none overflow-y-auto flex flex-col gap-6">
+			<SheetContent className="w-full md:max-w-[500px] outline-none overflow-y-auto flex flex-col">
 				<SheetHeader>
 					<SheetTitle>Novo Tipo</SheetTitle>
 					<SheetDescription>Adicione um novo tipo.</SheetDescription>

@@ -1,7 +1,10 @@
-import { HTTPSuccessResponse, HTTPErrorResponse } from "@/@types/http";
-import { AxiosError } from "axios";
+import type { Type, TypeGroup } from "@/@types/admin/type";
+import type {
+	HTTPErrorResponse,
+	HTTPSuccessResponse,
+} from "@/@types/http/http";
 import { api } from "@/lib/axios";
-import { Type, TypeGroup } from "@/@types/admin/type";
+import { AxiosError } from "axios";
 
 type GetTypesRequest = {
 	group?: TypeGroup;
@@ -12,7 +15,7 @@ type GetTypesResponse = HTTPSuccessResponse<Type[]> | HTTPErrorResponse;
 
 /**
  * @description Busca todos os tipos
- * @param request - Parâmetros da requisição
+ * @param request Parâmetros da requisição
  * @returns Resposta da API
  */
 export async function getTypes(

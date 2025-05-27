@@ -243,11 +243,12 @@ model BaseProduct {
   Type   Type   @relation(fields: [typeId], references: [id], onDelete: Cascade)
   typeId String
 
+  SpecificProduct SpecificProduct[]
+
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
 
   @@map("base_products")
-  SpecificProduct SpecificProduct[]
 }
 
 model SpecificProduct {

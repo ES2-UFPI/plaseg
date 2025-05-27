@@ -1,10 +1,10 @@
 import {
-	Package,
-	Tags,
-	UserCog,
 	Banknote,
 	Barcode,
 	FolderKanban,
+	Package,
+	Tags,
+	UserCog,
 } from "lucide-react";
 import { ReactNode } from "react";
 
@@ -31,15 +31,7 @@ export const adminMenuItems: MenuItem[] = [
 		description:
 			"Cadastre, edite e gerencie as oportunidades de financiamento que os municípios poderão acessar.",
 		url: "/admin/oportunidades",
-		ready: false,
-	},
-	{
-		icon: <UserCog size={24} className="text-blue-500" />,
-		title: "Administradores",
-		description:
-			"Controle o acesso ao sistema, gerencie perfis, permissões e dados dos administradores",
-		url: "/admin/administradores",
-		ready: false,
+		ready: true,
 	},
 	{
 		icon: <Package size={24} className="text-blue-500" />,
@@ -51,11 +43,19 @@ export const adminMenuItems: MenuItem[] = [
 	},
 	{
 		icon: <Barcode size={24} className="text-blue-500" />,
-		title: "Produtos",
+		title: "Produtos Específicos",
 		description:
 			"Cadastre, edite e gerencie os produtos que serão oferecidos nos projetos.",
-		url: "/admin/produtos",
-		ready: false,
+		url: "/admin/produtos-especificos",
+		ready: true,
+	},
+	{
+		icon: <UserCog size={24} className="text-blue-500" />,
+		title: "Administradores",
+		description:
+			"Cadastre, controle o acesso ao sistema, gerencie perfis, permissões e dados dos administradores",
+		url: "/admin/administradores",
+		ready: true,
 	},
 	{
 		icon: <FolderKanban size={24} className="text-blue-500" />,

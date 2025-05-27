@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { useSignUp } from "@/hooks/auth/use-sign-up";
-import { Form } from "@/components/ui/form";
 import { FormCombobox } from "@/components/form/form-combobox";
-import { FormInput } from "../form/form-input";
+import { Button } from "@/components/ui/button";
+import { Form } from "@/components/ui/form";
+import { useSignUp } from "@/hooks/auth/use-sign-up";
 import { LoaderCircle } from "lucide-react";
 import { FormDocumentInput } from "../form/form-document";
+import { FormInput } from "../form/form-input";
 import { FormPhoneInput } from "../form/form-phone-input";
 
 const roleOptions = [
