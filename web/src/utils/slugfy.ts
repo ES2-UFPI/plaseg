@@ -11,8 +11,8 @@ export function slugfy(text: string): string {
 		.toLowerCase() // Converte para minúsculo
 		.trim() // Remove espaços no início e fim
 		.replace(/\s+/g, "-") // Substitui espaços por hífens
-		.replace(/[^\w\-]+/g, "") // Remove caracteres que não são letras, números ou hífens
-		.replace(/\-\-+/g, "-") // Substitui múltiplos hífens por um único hífen
+		.replace(/[^\w-]+/g, "") // Remove caracteres que não são letras, números ou hífens
+		.replace(/--+/g, "-") // Substitui múltiplos hífens por um único hífen
 		.replace(/^-+/, "") // Remove hífens do início
 		.replace(/-+$/, ""); // Remove hífens do fim
 }
