@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router";
 
-import AdminDashboard from "@/pages/admin/admin-dashboard";
+import AdminDashboard from "@/pages/admin/dashboard";
 import Administrators from "@/pages/admin/administrators";
 import BaseProducts from "@/pages/admin/base-products";
 import Opportunities from "@/pages/admin/opportunities";

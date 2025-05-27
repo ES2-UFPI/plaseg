@@ -11,21 +11,19 @@ import {
 } from "@tanstack/react-table";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { typesTableColumns } from "./types-table-columns";
+import { administratorsTableColumns } from "./administrators-table-columns";
 import { SearchInput } from "@/components/ui/search-input";
-import { translateTypesTableKeys } from "@/utils/translate-types-table-keys";
-import { TableSelect } from "@/components/table/table-select";
-import { TypesTable } from "./types-table";
+import { translateAdministratorsTableKeys } from "@/utils/translate-administrators-table-keys";
+import { AdministratorsTable } from "./administrators-table";
 import { TablePagination } from "@/components/table/table-footer";
 import { TableHideColumnsDropDown } from "@/components/table/table-hide-columns-dropdown";
-import { TypeGroup } from "@/@types/admin/type";
-import { CreateTypeSheet } from "../modals/create-type-sheet";
-import { useGetTypes } from "@/hooks/admin/types/use-get-types";
+import { CreateAdministratorSheet } from "../modals/create-administrator-sheet";
+import { useGetAdministrators } from "@/hooks/admin/administrators/use-get-administrators";
 
-export function TypesTableContainer() {
+export function AdministratorsTableContainer() {
 	const [sorting, setSorting] = React.useState<SortingState>([
 		{
-			id: "description",
+			id: "name",
 			desc: false,
 		},
 	]);
@@ -35,17 +33,11 @@ export function TypesTableContainer() {
 	const [columnVisibility, setColumnVisibility] =
 		React.useState<VisibilityState>({});
 	const [rowSelection, setRowSelection] = React.useState({});
-	const { types, isLoadingGetTypes } = useGetTypes({});
-
-	const groupOptions = [
-		{ label: "Oportunidade", value: TypeGroup.OPPORTUNITY },
-		{ label: "Serviço", value: TypeGroup.SERVICE },
-		{ label: "Categoria", value: TypeGroup.CATEGORY },
-	];
+	const { administrators, isLoadingGetAdministrators } = useGetAdministrators();
 
 	const table = useReactTable({
-		data: types,
-		columns: typesTableColumns,
+		data: administrators,
+		columns: administratorsTableColumns,
 		onSortingChange: setSorting,
 		onColumnFiltersChange: setColumnFilters,
 		getCoreRowModel: getCoreRowModel(),
@@ -65,29 +57,20 @@ export function TypesTableContainer() {
 	return (
 		<div className="w-full space-y-4 bg-white p-4 border border-muted rounded-lg">
 			<div>
-				<h1 className="text-2xl font-semibold">Tipos</h1>
+				<h1 className="text-2xl font-semibold">Administradores</h1>
 				<span className="text-sm text-muted-foreground">
-					Adicione, edite e exclua os tipos da aplicação.
+					Adicione, edite e exclua os administradores da aplicação.
 				</span>
 			</div>
 
 			<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:flex items-center gap-4">
 				<SearchInput
 					className="w-full xl:w-[300px]"
-					placeholder="Pesquisar tipos..."
-					value={
-						(table.getColumn("description")?.getFilterValue() as string) ?? ""
-					}
+					placeholder="Pesquisar administradores..."
+					value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
 					onChange={(event) =>
-						table.getColumn("description")?.setFilterValue(event.target.value)
+						table.getColumn("name")?.setFilterValue(event.target.value)
 					}
-				/>
-
-				<TableSelect
-					options={groupOptions}
-					className="w-full xl:w-[200px]"
-					placeholder="Grupo"
-					onChange={(value) => table.getColumn("group")?.setFilterValue(value)}
 				/>
 
 				<Button
@@ -101,16 +84,20 @@ export function TypesTableContainer() {
 
 				<TableHideColumnsDropDown
 					table={table}
-					translateFunction={translateTypesTableKeys}
+					translateFunction={(key: string) =>
+						translateAdministratorsTableKeys[
+							key as keyof typeof translateAdministratorsTableKeys
+						]
+					}
 				/>
 
-				<CreateTypeSheet />
+				<CreateAdministratorSheet className="bg-primary hover:bg-primary/90" />
 			</div>
 
-			<TypesTable
+			<AdministratorsTable
 				table={table}
-				isLoadingGetTypes={isLoadingGetTypes}
-				data={types}
+				isLoadingGetAdministrators={isLoadingGetAdministrators}
+				data={administrators}
 			/>
 
 			<TablePagination table={table} />

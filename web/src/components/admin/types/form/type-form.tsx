@@ -46,7 +46,7 @@ export function TypeForm({ setIsFormOpen, form, isLoading }: TypeFormProps) {
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmitForm}
-				className="flex-1 flex flex-col justify-between"
+				className="flex-1 flex flex-col justify-between px-4 pb-4"
 			>
 				<div className="flex flex-col gap-4">
 					<FormInput

@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import {
 	ColumnFiltersState,
@@ -11,22 +12,21 @@ import {
 } from "@tanstack/react-table";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { typesTableColumns } from "./types-table-columns";
+import { opportunitiesTableColumns } from "./opportunities-table-columns";
 import { SearchInput } from "@/components/ui/search-input";
-import { translateTypesTableKeys } from "@/utils/translate-types-table-keys";
+import { translateOpportunitiesTableKeys } from "@/utils/translate-opportunities-table-keys";
+import { useGetOpportunities } from "@/hooks/admin/opportunities/use-get-opportunities";
 import { TableSelect } from "@/components/table/table-select";
-import { TypesTable } from "./types-table";
+import { CreateOpportunitySheet } from "../modals/create-opportunity-sheet";
+import { OpportunitiesTable } from "./opportunities-table";
 import { TablePagination } from "@/components/table/table-footer";
 import { TableHideColumnsDropDown } from "@/components/table/table-hide-columns-dropdown";
-import { TypeGroup } from "@/@types/admin/type";
-import { CreateTypeSheet } from "../modals/create-type-sheet";
-import { useGetTypes } from "@/hooks/admin/types/use-get-types";
 
-export function TypesTableContainer() {
+export function OpportunitiesTableContainer() {
 	const [sorting, setSorting] = React.useState<SortingState>([
 		{
-			id: "description",
-			desc: false,
+			id: "maxFundingAmount",
+			desc: true,
 		},
 	]);
 	const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -35,17 +35,11 @@ export function TypesTableContainer() {
 	const [columnVisibility, setColumnVisibility] =
 		React.useState<VisibilityState>({});
 	const [rowSelection, setRowSelection] = React.useState({});
-	const { types, isLoadingGetTypes } = useGetTypes({});
-
-	const groupOptions = [
-		{ label: "Oportunidade", value: TypeGroup.OPPORTUNITY },
-		{ label: "Serviço", value: TypeGroup.SERVICE },
-		{ label: "Categoria", value: TypeGroup.CATEGORY },
-	];
+	const { opportunities, isLoadingGetOpportunities } = useGetOpportunities();
 
 	const table = useReactTable({
-		data: types,
-		columns: typesTableColumns,
+		data: opportunities,
+		columns: opportunitiesTableColumns,
 		onSortingChange: setSorting,
 		onColumnFiltersChange: setColumnFilters,
 		getCoreRowModel: getCoreRowModel(),
@@ -65,29 +59,38 @@ export function TypesTableContainer() {
 	return (
 		<div className="w-full space-y-4 bg-white p-4 border border-muted rounded-lg">
 			<div>
-				<h1 className="text-2xl font-semibold">Tipos</h1>
+				<h1 className="text-2xl font-semibold">Oportunidades</h1>
 				<span className="text-sm text-muted-foreground">
-					Adicione, edite e exclua os tipos da aplicação.
+					Adicione, edite e exclua as oportunidades da aplicação.
 				</span>
 			</div>
 
 			<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:flex items-center gap-4">
 				<SearchInput
 					className="w-full xl:w-[300px]"
-					placeholder="Pesquisar tipos..."
-					value={
-						(table.getColumn("description")?.getFilterValue() as string) ?? ""
-					}
+					placeholder="Pesquisar oportunidades..."
+					value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
 					onChange={(event) =>
-						table.getColumn("description")?.setFilterValue(event.target.value)
+						table.getColumn("title")?.setFilterValue(event.target.value)
 					}
 				/>
 
 				<TableSelect
-					options={groupOptions}
+					options={[
+						{
+							label: "Todos",
+							value: "all",
+						},
+						{
+							label: "Edital",
+							value: "edital",
+						},
+					]}
 					className="w-full xl:w-[200px]"
-					placeholder="Grupo"
-					onChange={(value) => table.getColumn("group")?.setFilterValue(value)}
+					placeholder="Tipo"
+					onChange={(value) =>
+						table.getColumn("typeDescription")?.setFilterValue(value)
+					}
 				/>
 
 				<Button
@@ -101,16 +104,16 @@ export function TypesTableContainer() {
 
 				<TableHideColumnsDropDown
 					table={table}
-					translateFunction={translateTypesTableKeys}
+					translateFunction={translateOpportunitiesTableKeys}
 				/>
 
-				<CreateTypeSheet />
+				<CreateOpportunitySheet className="font-semibold" />
 			</div>
 
-			<TypesTable
+			<OpportunitiesTable
 				table={table}
-				isLoadingGetTypes={isLoadingGetTypes}
-				data={types}
+				isLoadingGetOpportunities={isLoadingGetOpportunities}
+				data={opportunities}
 			/>
 
 			<TablePagination table={table} />

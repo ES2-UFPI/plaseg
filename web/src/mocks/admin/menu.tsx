@@ -56,7 +56,7 @@ export const adminMenuItems: MenuItem[] = [
 		description:
 			"Cadastre, controle o acesso ao sistema, gerencie perfis, permissões e dados dos administradores",
 		url: "/admin/administradores",
-		ready: false,
+		ready: true,
 	},
 	{
 		icon: <FolderKanban size={24} className="text-blue-500" />,
