@@ -33,22 +33,7 @@ export const adminMenuItems: MenuItem[] = [
 		url: "/admin/oportunidades",
 		ready: false,
 	},
-	{
-		icon: <UserCog size={24} className="text-blue-500" />,
-		title: "Administradores",
-		description:
-			"Controle o acesso ao sistema, gerencie perfis, permissões e dados dos administradores",
-		url: "/admin/administradores",
-		ready: false,
-	},
-	{
-		icon: <FolderKanban size={24} className="text-blue-500" />,
-		title: "Tipos de Projeto",
-		description:
-			"Defina e gerencie os tipos de projetos que podem ser cadastrados no sistema",
-		url: "/admin/tipos-de-projeto",
-		ready: false,
-	},
+
 	{
 		icon: <Package size={24} className="text-blue-500" />,
 		title: "Produtos Base",
@@ -63,6 +48,22 @@ export const adminMenuItems: MenuItem[] = [
 		description:
 			"Cadastre, edite e gerencie os produtos que serão oferecidos nos projetos.",
 		url: "/admin/produtos",
+		ready: false,
+	},
+	{
+		icon: <UserCog size={24} className="text-blue-500" />,
+		title: "Administradores",
+		description:
+			"Cadastre, controle o acesso ao sistema, gerencie perfis, permissões e dados dos administradores",
+		url: "/admin/administradores",
+		ready: false,
+	},
+	{
+		icon: <FolderKanban size={24} className="text-blue-500" />,
+		title: "Tipos de Projeto",
+		description:
+			"Defina e gerencie os tipos de projetos que podem ser cadastrados no sistema",
+		url: "/admin/tipos-de-projeto",
 		ready: false,
 	},
 ];

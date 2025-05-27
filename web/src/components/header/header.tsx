@@ -9,7 +9,7 @@ interface HeaderProps {
 }
 
 export function Header({ children }: HeaderProps) {
-	const { isLoadingGetProfile } = useGetProfile();
+	const { user, isLoadingGetProfile } = useGetProfile();
 
 	return (
 		<header className="w-full border-b bg-[#02050C] text-gray-50 flex flex-col	gap-2 pt-4 pb-3 px-4">
@@ -20,8 +20,8 @@ export function Header({ children }: HeaderProps) {
 
 				{isLoadingGetProfile && <MenuSkeleton />}
 
-				{!isLoadingGetProfile && (
-					<Menu name={"Admin"} email={"plaseg@admin.com"} />
+				{!isLoadingGetProfile && user && (
+					<Menu name={user.name} email={user.email} />
 				)}
 			</div>
 

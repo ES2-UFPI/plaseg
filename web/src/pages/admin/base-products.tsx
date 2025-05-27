@@ -1,4 +1,4 @@
-import { BaseProductsTableContainer } from "@/components/admin/base-products/table/base-products-table-container";
+import { BaseProductsTableContainer } from "@/components/base-products/table/base-products-table-container";
 
 export default function BaseProducts() {
 	return (
