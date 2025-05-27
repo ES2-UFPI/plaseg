@@ -3,7 +3,7 @@ import { Link } from "react-router";
 
 export default function SignUp() {
 	return (
-		<div className="flex flex-col gap-8 text-center rounded-lg">
+		<div className="w-full flex flex-col gap-8 text-center rounded-lg">
 			<div className="flex flex-col gap-2">
 				<h2 className="text-2xl font-bold">Crie uma conta</h2>
 

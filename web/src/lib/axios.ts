@@ -7,7 +7,7 @@ export const api = axios.create({
 });
 
 api.interceptors.request.use(async (config) => {
-	const accessToken = Cookies.get("accessToken");
+	const accessToken = Cookies.get("plaseg-es2-token");
 
 	if (accessToken) {
 		config.headers.Authorization = `Bearer ${accessToken}`;

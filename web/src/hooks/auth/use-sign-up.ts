@@ -1,8 +1,8 @@
-import { useMutation } from "@tanstack/react-query";
+import { signUpRequestSchema } from "@/@schemas/auth";
 import { signUp } from "@/api/auth/sign-up";
+import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
-import { signUpRequestSchema } from "@/@schemas/auth";
 import { useFormMutation } from "../common/use-form-mutation";
 
 export function useSignUp() {
@@ -32,9 +32,9 @@ export function useSignUp() {
 				return;
 			}
 
-			response.errors.forEach((error) => {
+			for (const error of response.errors) {
 				toast.error(error);
-			});
+			}
 		},
 	});
 

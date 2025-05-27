@@ -1,17 +1,21 @@
-import { Routes, Route, Navigate } from "react-router";
-import { PrivateRoutes } from "./private-routes";
-import { AuthRoutes } from "./auth-routes";
+import { Navigate, Route, Routes } from "react-router";
 
-import AuthLayout from "@/layout/auth-layout";
-import RegisterMunicipality from "@/pages/municipality/register-municipality";
-import AdminRoutes from "./admin-routes";
-import AdminLayout from "@/layouts/admin-layout";
-import Home from "@/pages/home";
+import { PrivateRoutes } from "./private-routes";
 import { PublicRoutes } from "./public-routes";
+
+import Home from "@/pages/home";
+
+import AuthLayout from "@/layouts/auth-layout";
+import AuthRoutes from "./auth-routes";
+
+import AdminLayout from "@/layouts/admin-layout";
+import AdminRoutes from "@/routes/admin-routes";
 
 export function AppRoutes() {
 	return (
 		<Routes>
+			<Route path="/" element={<Home />} />
+
 			<Route element={<PublicRoutes />}>
 				<Route element={<AuthLayout />}>
 					<Route path="*" element={<AuthRoutes />} />
@@ -19,10 +23,6 @@ export function AppRoutes() {
 			</Route>
 
 			<Route element={<PrivateRoutes />}>
-				<Route path="/" element={<Home />} />
-
-				<Route path="cadastrar-municipio" element={<RegisterMunicipality />} />
-
 				<Route path="admin" element={<AdminLayout />}>
 					<Route index element={<Navigate to="/admin/dashboard" replace />} />
 					<Route path="*" element={<AdminRoutes />} />

@@ -1,11 +1,11 @@
-import { createType } from "@/api/admin/types/create-type";
-import { useMutation } from "@tanstack/react-query";
-import { queryClient } from "@/lib/react-query";
-import { toast } from "sonner";
-import { useState } from "react";
-import { createTypeSchema } from "@/@schemas/admin/type";
-import { useFormMutation } from "@/hooks/common/use-form-mutation";
+import { createTypeSchema } from "@/@schemas/type";
 import { TypeGroup } from "@/@types/admin/type";
+import { createType } from "@/api/admin/types/create-type";
+import { useFormMutation } from "@/hooks/common/use-form-mutation";
+import { queryClient } from "@/lib/react-query";
+import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
+import { toast } from "sonner";
 
 export function useCreateType() {
 	const [isCreateTypeSheetOpen, setIsCreateTypeSheetOpen] = useState(false);

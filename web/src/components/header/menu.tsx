@@ -1,3 +1,4 @@
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -5,8 +6,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { useAuthStore } from "@/store/auth";
+import { useAuthStore } from "@/stores/auth";
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { LogOut, Settings } from "lucide-react";
 import { Link } from "react-router";
@@ -22,8 +22,8 @@ export function Menu({ name, email }: MenuProps) {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger className="outline-none">
-				<div className="flex items-center gap-3">
-					<div className="flex flex-col items-start gap-0">
+				<div className="flex items-center justify-between gap-3 w-[250px]">
+					<div className="flex flex-col items-start gap-0 truncate">
 						<strong className="text-sm">{name}</strong>
 
 						<span className="text-sm font-medium text-muted-foreground">

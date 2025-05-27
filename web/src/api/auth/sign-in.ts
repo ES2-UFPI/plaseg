@@ -1,4 +1,7 @@
-import type { HTTPErrorResponse, HTTPSuccessResponse } from "@/@types/http";
+import type {
+	HTTPErrorResponse,
+	HTTPSuccessResponse,
+} from "@/@types/http/http";
 import { api } from "@/lib/axios";
 import { AxiosError } from "axios";
 
@@ -15,6 +18,11 @@ type SignInResponse =
 	| HTTPSuccessResponse<SignInResponseBody>
 	| HTTPErrorResponse;
 
+/**
+ * @description Realiza o login do usuário
+ * @param data Dados do login
+ * @returns Resposta da API
+ */
 export async function signIn(data: SignInRequestBody): Promise<SignInResponse> {
 	try {
 		const response = await api.post<SignInResponse>("/auth/sign-in", data);

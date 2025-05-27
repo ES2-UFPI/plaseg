@@ -1,14 +1,14 @@
-import type React from "react";
-import { useState, useEffect } from "react";
-import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
 import {
+	FormControl,
 	FormField,
 	FormItem,
 	FormLabel,
-	FormControl,
 	FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
+import type React from "react";
+import { useEffect, useState } from "react";
 import type { FieldValues, Path, UseFormReturn } from "react-hook-form";
 
 interface FormPhoneInputProps<TFieldValues extends FieldValues> {
@@ -73,7 +73,7 @@ function PhoneInputAdapter({
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const rawValue = e.target.value;
 		const numbers = removeNonNumeric(rawValue);
-		if (numbers.length > 10) return;
+		if (numbers.length > 11) return;
 
 		const formattedValue = formatPhone(rawValue);
 		setInputValue(formattedValue);

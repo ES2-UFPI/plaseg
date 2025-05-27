@@ -1,14 +1,14 @@
+import { CreateTypeRequest } from "@/@schemas/type";
+import { TypeGroup } from "@/@types/admin/type";
+import { FormInput } from "@/components/form/form-input";
+import { FormSelect } from "@/components/form/form-select";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { FormInput } from "@/components/form/form-input";
-import { LoaderCircle } from "lucide-react";
-import { FormSelect } from "@/components/form/form-select";
-import { TypeGroup } from "@/@types/admin/type";
 import { useGetTypes } from "@/hooks/admin/types/use-get-types";
+import { LoaderCircle } from "lucide-react";
 import { useState } from "react";
-import { SetHasParentCheckbox } from "./set-has-parent-checkbox";
 import { UseFormReturn } from "react-hook-form";
-import { CreateTypeRequest } from "@/@schemas/admin/type";
+import { SetHasParentCheckbox } from "./set-has-parent-checkbox";
 
 interface TypeFormProps {
 	form: UseFormReturn<CreateTypeRequest> & {

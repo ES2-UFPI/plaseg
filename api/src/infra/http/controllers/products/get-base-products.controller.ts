@@ -35,16 +35,14 @@ export async function getBaseProduct(app: FastifyInstance) {
 					errors: result.value.errors,
 					data: null,
 				});
-            }
-
-            console.log(result)
+			}
 
 			return reply.status(200).send({
 				success: true,
 				errors: null,
-                data: {
-                    baseProducts: result.value.baseProducts
-                },
+				data: {
+					baseProducts: result.value.baseProducts,
+				},
 			});
 		}
 	);

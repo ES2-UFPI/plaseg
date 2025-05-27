@@ -1,12 +1,6 @@
 import { z } from "zod";
 
-export const typeGroupSchema = z.enum([
-	"SERVICE",
-	"CATEGORY",
-	"SUBCATEGORY",
-	"SUBSUBCATEGORY",
-	"OPPORTUNITY",
-]);
+export const typeGroupSchema = z.enum(["SERVICE", "OPPORTUNITY", "CATEGORY"]);
 
 export type TypeGroup = z.infer<typeof typeGroupSchema>;
 

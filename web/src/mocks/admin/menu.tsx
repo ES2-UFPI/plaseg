@@ -1,10 +1,10 @@
 import {
-	Package,
-	Tags,
-	UserCog,
 	Banknote,
 	Barcode,
 	FolderKanban,
+	Package,
+	Tags,
+	UserCog,
 } from "lucide-react";
 import { ReactNode } from "react";
 
@@ -42,6 +42,14 @@ export const adminMenuItems: MenuItem[] = [
 		ready: false,
 	},
 	{
+		icon: <FolderKanban size={24} className="text-blue-500" />,
+		title: "Tipos de Projeto",
+		description:
+			"Defina e gerencie os tipos de projetos que podem ser cadastrados no sistema",
+		url: "/admin/tipos-de-projeto",
+		ready: false,
+	},
+	{
 		icon: <Package size={24} className="text-blue-500" />,
 		title: "Produtos Base",
 		description:
@@ -55,14 +63,6 @@ export const adminMenuItems: MenuItem[] = [
 		description:
 			"Cadastre, edite e gerencie os produtos que serão oferecidos nos projetos.",
 		url: "/admin/produtos",
-		ready: false,
-	},
-	{
-		icon: <FolderKanban size={24} className="text-blue-500" />,
-		title: "Tipos de Projeto",
-		description:
-			"Defina e gerencie os tipos de projetos que podem ser cadastrados no sistema",
-		url: "/admin/tipos-de-projeto",
 		ready: false,
 	},
 ];
