@@ -300,7 +300,11 @@ model Document {
   opportunity   Opportunity? @relation(fields: [opportunityId], references: [id])
   opportunityId String?
 
+  projectType   ProjectType? @relation(fields: [projectTypeId], references: [id])
+  projectTypeId String?
+  
   fields Field[]
+
 
   @@map("documents")
 }
