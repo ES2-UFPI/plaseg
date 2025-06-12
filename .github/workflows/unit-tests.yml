@@ -1,4 +1,4 @@
-name: Run E2E Tests
+name: Run Tests
 
 on:
   push:
@@ -9,16 +9,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
-    services:
-      postgres:
-        image: bitnami/postgresql
-        ports:
-          - 5432:5432
-        env:
-          POSTGRESQL_USERNAME: docker
-          POSTGRESQL_PASSWORD: docker
-          POSTGRESQL_DATABASE: fastify
 
     steps:
       - uses: actions/checkout@v3
@@ -39,32 +29,24 @@ jobs:
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+        working-directory: ./api
 
       - name: Setup pnpm cache
         uses: actions/cache@v3
         with:
           path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('api/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
+        working-directory: ./api
 
-      - name: Migrate Database
-        run: pnpm migrate
-        env:
-          JWT_SECRET: testing
-          DATABASE_URL: "postgresql://docker:docker@localhost:5432/fastify?schema=public"
+      - name: Build project
+        run: pnpm generate && pnpm build
+        working-directory: ./api
 
-      - name: Generate Prisma Client
-        run: pnpm generate
-
-      - name: Build Project
-        run: pnpm build
-
-      - name: Run E2E tests
-        run: pnpm test:e2e
-        env:
-          JWT_SECRET: testing
-          DATABASE_URL: "postgresql://docker:docker@localhost:5432/fastify?schema=public"
+      - name: Run tests
+        run: pnpm test
+        working-directory: ./api
