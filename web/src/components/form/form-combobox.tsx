@@ -18,8 +18,8 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { type Control, type FieldValues, type Path, type UseFormReturn } from "react-hook-form";
+import { Check, ChevronsUpDown, LoaderCircle } from "lucide-react";
+import { Control, FieldValues, Path, UseFormReturn } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
@@ -31,6 +31,7 @@ interface FormComboboxProps<TFieldValues extends FieldValues> {
 	translatedEntity: string;
 	emptyMessage?: string;
 	placeholder?: string;
+	isLoading?: boolean;
 }
 
 export function FormCombobox<TFieldValues extends FieldValues>({
@@ -40,6 +41,7 @@ export function FormCombobox<TFieldValues extends FieldValues>({
 	translatedEntity,
 	emptyMessage = "Nenhum item encontrado.",
 	placeholder,
+	isLoading = false,
 }: FormComboboxProps<TFieldValues>) {
 	const [open, setOpen] = useState(false);
 
@@ -82,7 +84,15 @@ export function FormCombobox<TFieldValues extends FieldValues>({
 									className="h-9"
 								/>
 								<CommandList>
-									<CommandEmpty>{emptyMessage}</CommandEmpty>
+									<CommandEmpty>
+										{isLoading && (
+											<div className="w-full flex items-center justify-center">
+												<LoaderCircle className="animate-spin text-muted-foreground" />
+											</div>
+										)}
+
+										{!isLoading && emptyMessage}
+									</CommandEmpty>
 
 									<CommandGroup>
 										{options.map((option) => (

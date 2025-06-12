@@ -16,6 +16,7 @@ interface FormInputProps<TFieldValues extends FieldValues> {
 	placeholder?: string;
 	type?: "text" | "password" | "email" | "number" | "textarea";
 	className?: string;
+	inputClassName?: string;
 }
 
 export function FormInput<TFieldValues extends FieldValues>({
@@ -25,6 +26,7 @@ export function FormInput<TFieldValues extends FieldValues>({
 	type = "text",
 	placeholder,
 	className = "",
+	inputClassName = "",
 }: FormInputProps<TFieldValues>) {
 	return (
 		<FormField
@@ -46,6 +48,7 @@ export function FormInput<TFieldValues extends FieldValues>({
 						) : (
 							<Input
 								type={type}
+								className={inputClassName}
 								id={entity}
 								placeholder={
 									placeholder || `Digite ${entity ? `o ${entity}` : ""}`

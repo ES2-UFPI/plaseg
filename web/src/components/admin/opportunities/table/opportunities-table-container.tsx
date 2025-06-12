@@ -23,12 +23,7 @@ import { TablePagination } from "@/components/table/table-footer";
 import { TableHideColumnsDropDown } from "@/components/table/table-hide-columns-dropdown";
 
 export function OpportunitiesTableContainer() {
-	const [sorting, setSorting] = React.useState<SortingState>([
-		{
-			id: "maxFundingAmount",
-			desc: true,
-		},
-	]);
+	const [sorting, setSorting] = React.useState<SortingState>([]);
 	const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
 		[]
 	);
