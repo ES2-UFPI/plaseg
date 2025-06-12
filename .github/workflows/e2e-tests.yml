@@ -34,6 +34,7 @@ jobs:
         with:
           node-version: 20
           cache: "pnpm"
+          cache-dependency-path: ./api/pnpm-lock.yaml
 
       - name: Get pnpm store directory
         shell: bash
@@ -45,7 +46,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('api/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('api/pnpm-lock.yaml') }}  # <-- USE O CAMINHO CORRETO
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
