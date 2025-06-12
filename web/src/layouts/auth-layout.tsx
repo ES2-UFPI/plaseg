@@ -3,7 +3,7 @@ import { Outlet } from "react-router";
 export default function AuthLayout() {
 	return (
 		<div className="grid gird-cols-1 md:grid-cols-3 h-screen w-full">
-			<div className="hidden md:flex items-center justify-center w-full bg-muted/30">
+			<div className="hidden md:flex items-center justify-center w-full bg-muted">
 				<h1 className="flex text-6xl font-semibold items-center text-slate-700">
 					Pla<span className="text-primary">Seg</span>
 				</h1>
