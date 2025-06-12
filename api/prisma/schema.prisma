@@ -304,3 +304,15 @@ model Document {
 
   @@map("documents")
 }
+
+model ProjectType {
+  id   String @id @default(uuid())
+  name String @unique
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  documents              Document[]
+
+  @@map("project_types")
+}
