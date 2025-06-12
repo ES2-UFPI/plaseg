@@ -20,7 +20,7 @@ export function OpportunitiesTableHeader({
 	],
 }: OpportunitiesTableHeaderProps) {
 	return (
-		<TableHeader className="bg-slate-50">
+		<TableHeader>
 			{table.getHeaderGroups().map((headerGroup) => (
 				<TableRow key={headerGroup.id} className="border-none">
 					{headerGroup.headers.map((header) => {

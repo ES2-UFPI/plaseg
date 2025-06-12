@@ -7,6 +7,7 @@ import Opportunities from "@/pages/admin/opportunities";
 import Products from "@/pages/admin/specific-products";
 import ProjectTypes from "@/pages/admin/project-types";
 import Types from "@/pages/admin/types";
+import Settings from "@/pages/admin/settings";
 
 export default function AdminRoutes() {
 	return (
@@ -18,6 +19,7 @@ export default function AdminRoutes() {
 			<Route path="produtos-especificos" element={<Products />} />
 			<Route path="tipos-de-projeto" element={<ProjectTypes />} />
 			<Route path="administradores" element={<Administrators />} />
+			<Route path="configuracoes" element={<Settings />} />
 		</Routes>
 	);
 }

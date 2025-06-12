@@ -1,11 +1,4 @@
-import {
-	Banknote,
-	Barcode,
-	FolderKanban,
-	Package,
-	Tags,
-	UserCog,
-} from "lucide-react";
+import { Banknote, FolderKanban, Package, Settings, Tags, UserCog } from "lucide-react";
 import { ReactNode } from "react";
 
 interface MenuItem {
@@ -18,14 +11,6 @@ interface MenuItem {
 
 export const adminMenuItems: MenuItem[] = [
 	{
-		icon: <Tags size={24} className="text-blue-500" />,
-		title: "Tipos",
-		description:
-			"Cadastre, edite e gerencie os tipos de produtos, serviços e categorias utilizados no sistema",
-		url: "/admin/tipos",
-		ready: true,
-	},
-	{
 		icon: <Banknote size={24} className="text-blue-500" />,
 		title: "Oportunidades",
 		description:
@@ -34,19 +19,19 @@ export const adminMenuItems: MenuItem[] = [
 		ready: true,
 	},
 	{
+		icon: <Tags size={24} className="text-blue-500" />,
+		title: "Tipos",
+		description:
+			"Cadastre, edite e gerencie os tipos de produtos, serviços e categorias utilizados no sistema",
+		url: "/admin/tipos",
+		ready: true,
+	},
+	{
 		icon: <Package size={24} className="text-blue-500" />,
 		title: "Produtos Base",
 		description:
 			"Cadastre, edite e gerencie o catálogo completo de produtos que vão servir de base os produtos específicos.",
 		url: "/admin/produtos-base",
-		ready: true,
-	},
-	{
-		icon: <Barcode size={24} className="text-blue-500" />,
-		title: "Produtos Específicos",
-		description:
-			"Cadastre, edite e gerencie os produtos que serão oferecidos nos projetos.",
-		url: "/admin/produtos-especificos",
 		ready: true,
 	},
 	{
@@ -63,6 +48,14 @@ export const adminMenuItems: MenuItem[] = [
 		description:
 			"Defina e gerencie os tipos de projetos que podem ser cadastrados no sistema",
 		url: "/admin/tipos-de-projeto",
+		ready: false,
+	},
+	{
+		icon: <Settings size={24} className="text-blue-500" />,
+		title: "Configurações",
+		description:
+			"Gerencie as configurações do sistema, incluindo parâmetros, templates e notificações",
+		url: "/admin/configuracoes",
 		ready: false,
 	},
 ];
