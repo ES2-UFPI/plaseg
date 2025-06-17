@@ -24,25 +24,30 @@ jobs:
         with:
           node-version: 20
           cache: "pnpm"
+          cache-dependency-path: ./api/pnpm-lock.yaml 
 
       - name: Get pnpm store directory
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+        working-directory: ./api
 
       - name: Setup pnpm cache
         uses: actions/cache@v3
         with:
           path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('api/pnpm-lock.yaml') }}  
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
+        working-directory: ./api
 
       - name: Build project
         run: pnpm generate && pnpm build
+        working-directory: ./api
 
       - name: Run tests
         run: pnpm test
+        working-directory: ./api

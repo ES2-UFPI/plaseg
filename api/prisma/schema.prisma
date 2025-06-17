@@ -223,6 +223,7 @@ model Opportunity {
   typeId String
 
   requiredDocuments RequiredDocument[]
+  documents         Document[]
 
   @@map("opportunities")
 }
@@ -268,4 +269,38 @@ model SpecificProduct {
   updatedAt DateTime? @updatedAt
 
   @@map("specific_products")
+}
+
+model Field {
+  id       String   @id @default(uuid())
+  name     String
+  value    String?
+  parentId String?
+  ready    Boolean? @default(false)
+
+  parent   Field?  @relation("FieldHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
+  children Field[] @relation("FieldHierarchy")
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  document   Document @relation(fields: [documentId], references: [id])
+  documentId String
+
+  @@map("fields")
+}
+
+model Document {
+  id   String @id @default(uuid())
+  name String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  opportunity   Opportunity? @relation(fields: [opportunityId], references: [id])
+  opportunityId String?
+
+  fields Field[]
+
+  @@map("documents")
 }

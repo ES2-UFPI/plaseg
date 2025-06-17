@@ -11,6 +11,10 @@ import AuthRoutes from "./auth-routes";
 import AdminLayout from "@/layouts/admin-layout";
 import AdminRoutes from "@/routes/admin-routes";
 
+import MunicipalityLayout from "@/layouts/municipality-layout";
+import Opportunities from "@/pages/municipality/opportunities";
+import OpportunityDetails from "@/pages/municipality/opportunity-details";
+
 export function AppRoutes() {
 	return (
 		<Routes>
@@ -19,6 +23,13 @@ export function AppRoutes() {
 			<Route element={<PublicRoutes />}>
 				<Route element={<AuthLayout />}>
 					<Route path="*" element={<AuthRoutes />} />
+				</Route>
+			</Route>
+
+			<Route element={<PrivateRoutes />}>
+				<Route path="*" element={<MunicipalityLayout />}>
+					<Route path="oportunidades" element={<Opportunities />} />
+					<Route path="oportunidades/:slug" element={<OpportunityDetails />} />
 				</Route>
 			</Route>
 

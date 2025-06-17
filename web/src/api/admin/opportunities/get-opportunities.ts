@@ -1,15 +1,15 @@
 import { HTTPSuccessResponse, HTTPErrorResponse } from "@/@types/http/http";
 import { AxiosError } from "axios";
 import { api } from "@/lib/axios";
-import { Opportunity } from "@/@types/common/opportunity";
+import { OpportunitySchema } from "@/@schemas/opportunity";
 
 type GetOpportunitiesResponse =
-	| HTTPSuccessResponse<Opportunity[]>
+	| HTTPSuccessResponse<OpportunitySchema[]>
 	| HTTPErrorResponse;
 
 export async function getOpportunities(): Promise<GetOpportunitiesResponse> {
 	try {
-		const response = await api.get<HTTPSuccessResponse<Opportunity[]>>(
+		const response = await api.get<HTTPSuccessResponse<OpportunitySchema[]>>(
 			"/opportunities"
 		);
 
