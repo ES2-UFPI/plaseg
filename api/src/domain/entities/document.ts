@@ -5,6 +5,7 @@ import { getCurrentDate } from "../../core/utils/get-current-date";
 import { Field } from "./field";
 
 export interface DocumentProps {
+	id?: UniqueEntityID;
 	name: string;
 	fields: Field[];
 	createdAt: Date;
