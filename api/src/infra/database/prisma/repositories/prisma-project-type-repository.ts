@@ -1,7 +1,6 @@
-import { ProjectType } from "../../../../domain/entities/project-type";
-import { ProjectTypesRepository } from "../../../../domain/repositories/project-types-repository";
-
 import { prisma } from "../prisma";
+import { ProjectTypesRepository } from "../../../../domain/repositories/project-types-repository";
+import { ProjectType } from "../../../../domain/entities/project-type";
 import { PrismaProjectTypeMapper } from "../mappers/prisma-project-type-mapper";
 
 export class PrismaProjectTypesRepository implements ProjectTypesRepository {
@@ -68,11 +67,46 @@ export class PrismaProjectTypesRepository implements ProjectTypesRepository {
 			})
 		);
 	}
+
+	async findByOpportunityId(opportunityId: string): Promise<ProjectType[]> {
+		const opportunityProjectTypes =
+			await prisma.opportunityProjectType.findMany({
+				where: { opportunityId },
+				include: {
+					projectType: {
+						include: {
+							documents: {
+								include: {
+									fields: true,
+								},
+							},
+						},
+					},
+				},
+			});
+
+		return opportunityProjectTypes.map((opt) =>
+			PrismaProjectTypeMapper.toDomain(opt.projectType)
+		);
+	}
+
 	async create(projectType: ProjectType): Promise<void> {
 		const data = PrismaProjectTypeMapper.toPrisma(projectType);
 
 		await prisma.projectType.create({
 			data,
+		});
+	}
+
+	async createOpportunityProjectType(
+		opportunityId: string,
+		projectTypeId: string
+	): Promise<void> {
+		await prisma.opportunityProjectType.create({
+			data: {
+				opportunityId,
+				projectTypeId,
+			},
 		});
 	}
 }
