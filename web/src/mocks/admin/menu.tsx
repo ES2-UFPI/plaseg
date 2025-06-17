@@ -48,7 +48,7 @@ export const adminMenuItems: MenuItem[] = [
 		description:
 			"Defina e gerencie os tipos de projetos que podem ser cadastrados no sistema",
 		url: "/admin/tipos-de-projeto",
-		ready: false,
+		ready: true,
 	},
 	{
 		icon: <Settings size={24} className="text-blue-500" />,

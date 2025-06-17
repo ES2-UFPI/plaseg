@@ -16,6 +16,7 @@ interface FormTextareaProps<TFieldValues extends FieldValues> {
 	rows?: number;
 	maxLength?: number;
 	className?: string;
+	textAreaClassName?: string;
 }
 
 export function FormTextarea<TFieldValues extends FieldValues>({
@@ -26,6 +27,7 @@ export function FormTextarea<TFieldValues extends FieldValues>({
 	rows = 3,
 	maxLength = 250,
 	className = "",
+	textAreaClassName = "",
 }: FormTextareaProps<TFieldValues>) {
 	return (
 		<FormField
@@ -42,6 +44,7 @@ export function FormTextarea<TFieldValues extends FieldValues>({
 							}
 							rows={rows}
 							maxLength={maxLength}
+							className={textAreaClassName}
 							{...field}
 						/>
 					</FormControl>

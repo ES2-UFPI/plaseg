@@ -3,6 +3,7 @@ import { UniqueEntityID } from "../../core/entities/unique-entity-id";
 import { Optional } from "../../core/types/optional";
 import { getCurrentDate } from "../../core/utils/get-current-date";
 import { RequiredDocument } from "./required-document";
+import { Document } from "./document";
 import { Slug } from "./value-objects/slug";
 
 export interface OpportunityProps {
@@ -18,6 +19,7 @@ export interface OpportunityProps {
 	requiresCounterpart: boolean;
 	counterpartPercentage?: number;
 	requiredDocuments: RequiredDocument[];
+	documents: Document[];
 	isActive: boolean;
 	releasedForAll?: boolean;
 	type: string;
@@ -89,6 +91,10 @@ export class Opportunity extends Entity<OpportunityProps> {
 
 	get requiredDocuments() {
 		return this.props.requiredDocuments;
+	}
+
+	get documents() {
+		return this.props.documents;
 	}
 
 	get typeId() {
