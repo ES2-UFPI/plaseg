@@ -2,23 +2,22 @@ import { Entity } from "../../core/entities/entity";
 import { UniqueEntityID } from "../../core/entities/unique-entity-id";
 import { Optional } from "../../core/types/optional";
 import { getCurrentDate } from "../../core/utils/get-current-date";
-import { Field } from "./field";
+import { Document } from "./document";
 
-export interface DocumentProps {
-	id?: UniqueEntityID;
+export interface ProjectTypeProps {
 	name: string;
-	fields: Field[];
+	documents: Document[];
 	createdAt: Date;
 	updatedAt?: Date | null;
 }
 
-export class Document extends Entity<DocumentProps> {
+export class ProjectType extends Entity<ProjectTypeProps> {
 	get name() {
 		return this.props.name;
 	}
 
-	get fields() {
-		return this.props.fields;
+	get documents() {
+		return this.props.documents;
 	}
 
 	get createdAt() {
@@ -30,18 +29,18 @@ export class Document extends Entity<DocumentProps> {
 	}
 
 	static create(
-		props: Optional<DocumentProps, "createdAt">,
+		props: Optional<ProjectTypeProps, "createdAt">,
 		id?: UniqueEntityID
 	) {
-		const document = new Document(
+		const projectType = new ProjectType(
 			{
 				...props,
 				createdAt: props.createdAt ?? getCurrentDate(),
-				updatedAt: props.updatedAt ?? null,
+				updatedAt: null,
 			},
 			id
 		);
 
-		return document;
+		return projectType;
 	}
 }
