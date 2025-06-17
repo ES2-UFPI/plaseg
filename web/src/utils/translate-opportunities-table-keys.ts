@@ -10,11 +10,13 @@ export function translateOpportunitiesTableKeys(key: string): string {
 		finalDeadline: "Prazo Final",
 		requiresCounterpart: "Requer Contrapartida",
 		counterpartPercentage: "Percentual de Contrapartida",
-		requiredDocuments: "Documentos Necessários",
+		type: "Tipo",
+		typeId: "ID do Tipo",
+		isActive: "Ativo",
 		createdAt: "Criado em",
 		updatedAt: "Atualizado em",
-		typeDescription: "Tipo",
-		isActive: "Ativo",
+		requiredDocuments: "Documentos Necessários",
+		documents: "Documentos",
 		actions: "Ações",
 	};
 
