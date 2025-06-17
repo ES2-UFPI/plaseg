@@ -10,10 +10,10 @@ type GetProjectTypesUseCaseResponse = Either<
 >;
 
 export class GetProjectTypesUseCase {
-	constructor(private projectTypesRespository: ProjectTypesRepository) {}
+	constructor(private projectTypesRepository: ProjectTypesRepository) {}
 
 	async execute(): Promise<GetProjectTypesUseCaseResponse> {
-		const projectTypes = await this.projectTypesRespository.findMany();
+		const projectTypes = await this.projectTypesRepository.findMany();
 
 		return right({ projectTypes });
 	}

@@ -19,7 +19,7 @@ export async function createProjectType(app: FastifyInstance) {
 				summary: "Create a new project type",
 				security: [{ bearerAuth: [] }],
 				body: createProjectTypeRequestBodySchema.describe(
-					"Create opportunity request body"
+					"Create project type request body"
 				),
 				response: {
 					201: successResponseSchema(z.null()).describe("Created"),
