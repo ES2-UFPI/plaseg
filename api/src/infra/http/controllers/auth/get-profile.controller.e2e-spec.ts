@@ -58,7 +58,7 @@ describe("Get Profile (e2e)", () => {
 		expect(response.statusCode).toEqual(401);
 		expect(response.body).toEqual({
 			success: false,
-			errors: ["Não autorizado"],
+			errors: ["Usuário não autorizado"],
 			data: null,
 		});
 	});
