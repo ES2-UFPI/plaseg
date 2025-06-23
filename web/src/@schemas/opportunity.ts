@@ -48,6 +48,8 @@ export const opportunitySchema = z.object({
 	title: z.string(),
 	description: z.string(),
 	availableValue: z.number(),
+	responsibleAgency: z.string(),
+	type: z.string(),
 	minValue: z.number(),
 	maxValue: z.number(),
 	initialDeadline: z.coerce.date(),
