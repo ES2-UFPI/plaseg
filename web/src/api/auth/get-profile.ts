@@ -1,25 +1,12 @@
-import type {
-	HTTPErrorResponse,
-	HTTPSuccessResponse,
-} from "@/@types/http/http";
+import { GetProfileResponseBody } from "@/@schemas/auth";
+import { HTTPErrorResponse, HTTPSuccessResponse } from "@/@types/http/http";
 import { api } from "@/services/axios";
 import { AxiosError } from "axios";
-
-type GetProfileResponseBody = {
-	id: string;
-	name: string;
-	email: string;
-	role: string;
-};
 
 type GetProfileResponse =
 	| HTTPSuccessResponse<GetProfileResponseBody>
 	| HTTPErrorResponse;
 
-/**
- * @description Busca o perfil do usuário
- * @returns Resposta da API
- */
 export async function getProfile(): Promise<GetProfileResponse> {
 	try {
 		const response = await api.get<GetProfileResponse>("/auth/profile");

@@ -8,6 +8,8 @@ export interface SpecificProduct {
 	budget: number;
 	budgetValidity: Date;
 	baseProductId: string;
+	companyId: string;
+
 	createdAt: Date;
-	updatedAt: Date | null;
+	updatedAt?: Date | null;
 }

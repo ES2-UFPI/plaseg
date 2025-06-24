@@ -15,9 +15,10 @@ type GetBaseProductsResponse =
  */
 export async function getBaseProducts(): Promise<GetBaseProductsResponse> {
 	try {
-		const response = await api.get<
-			HTTPSuccessResponse<{ baseProducts: BaseProduct[] }>
-		>("/base-products");
+		const response =
+			await api.get<HTTPSuccessResponse<{ baseProducts: BaseProduct[] }>>(
+				"/base-products"
+			);
 
 		return response.data;
 	} catch (error) {

@@ -1,17 +1,16 @@
 import { HTTPSuccessResponse, HTTPErrorResponse } from "@/@types/http/http";
 import { AxiosError } from "axios";
 import { api } from "@/services/axios";
-import { OpportunitySchema } from "@/@schemas/opportunity";
+import { Opportunity } from "@/@schemas/opportunity";
 
 type GetOpportunitiesResponse =
-	| HTTPSuccessResponse<OpportunitySchema[]>
+	| HTTPSuccessResponse<Opportunity[]>
 	| HTTPErrorResponse;
 
 export async function getOpportunities(): Promise<GetOpportunitiesResponse> {
 	try {
-		const response = await api.get<HTTPSuccessResponse<OpportunitySchema[]>>(
-			"/opportunities"
-		);
+		const response =
+			await api.get<HTTPSuccessResponse<Opportunity[]>>("/opportunities");
 
 		return response.data;
 	} catch (error) {

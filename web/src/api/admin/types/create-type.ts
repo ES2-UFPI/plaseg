@@ -1,17 +1,14 @@
-import type { CreateTypeRequest } from "@/@schemas/type";
-import type {
-	HTTPErrorResponse,
-	HTTPSuccessResponse,
-} from "@/@types/http/http";
-import { api } from "@/services/axios";
+import { HTTPSuccessResponse, HTTPErrorResponse } from "@/@types/http/http";
 import { AxiosError } from "axios";
+import { api } from "@/services/axios";
+import { CreateTypeRequest } from "@/@schemas/type";
 
 type CreateTypeResponse = HTTPSuccessResponse<null> | HTTPErrorResponse;
 
 /**
  * @description Adiciona um tipo
- * @param request Dados do tipo
- * @returns Resposta da API
+ * @param request
+ * @returns
  */
 export async function createType(
 	request: CreateTypeRequest

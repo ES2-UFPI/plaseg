@@ -1,11 +1,14 @@
-import { signInRequestSchema } from "@/@schemas/auth";
-import { signIn } from "@/api/auth/sign-in";
-import { useAuthStore } from "@/stores/auth";
-import { useMutation } from "@tanstack/react-query";
-import { toast } from "sonner";
 import { useFormMutation } from "../common/use-form-mutation";
+import { useMutation } from "@tanstack/react-query";
+import { signIn } from "@/api/auth/sign-in";
+import { useAuthStore } from "@/hooks/auth/use-auth";
+import { toast } from "sonner";
+import { signInRequestSchema } from "@/@schemas/auth";
+import { useNavigate } from "react-router";
 
 export function useSignIn() {
+	const navigate = useNavigate();
+
 	const { authenticate } = useAuthStore();
 
 	const form = useFormMutation({
@@ -15,7 +18,9 @@ export function useSignIn() {
 			password: "",
 		},
 		onSubmit: (data) => {
-			signInFn(data);
+			signInFn({
+				...data,
+			});
 		},
 	});
 
@@ -23,13 +28,23 @@ export function useSignIn() {
 		mutationFn: signIn,
 		onSuccess: (response) => {
 			if (response.success) {
-				authenticate(response.data.accessToken);
+				authenticate(response.data.accessToken, response.data.user.role);
+
+				if (response.data.user.role === "MUNICIPALITY") {
+					navigate("/oportunidades");
+				}
+
+				if (
+					response.data.user.role === "ADMIN_MASTER" ||
+					response.data.user.role === "ADMIN"
+				) {
+					navigate("/admin/dashboard");
+				}
+
 				return;
 			}
 
-			for (const error of response.errors) {
-				toast.error(error);
-			}
+			toast.warning(response.errors[0]);
 		},
 	});
 

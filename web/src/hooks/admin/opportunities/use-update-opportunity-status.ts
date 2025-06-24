@@ -19,7 +19,7 @@ export function useUpdateOpportunityStatus() {
 		onSuccess: (response) => {
 			if (response.success) {
 				queryClient.invalidateQueries({
-					queryKey: ["opportunities"],
+					queryKey: ["get-opportunities"],
 				});
 				toast.success("Status da oportunidade atualizado com sucesso!");
 				return;

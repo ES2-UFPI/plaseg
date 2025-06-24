@@ -1,5 +1,5 @@
+import { useFormMutation } from "@/hooks/common/use-form-mutation";
 import { z } from "zod";
-import { useFormMutation } from "../use-form-mutation";
 
 const filterOpportunitiesSchema = z.object({
 	title: z.string(),
