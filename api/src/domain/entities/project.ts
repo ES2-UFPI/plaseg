@@ -3,6 +3,7 @@ import { UniqueEntityID } from "../../core/entities/unique-entity-id";
 import { Optional } from "../../core/types/optional";
 import { getCurrentDate } from "../../core/utils/get-current-date";
 import { Document } from "./document";
+import { RequestedItem } from "./requested-item";
 
 export interface ProjectProps {
 	title: string;
@@ -23,6 +24,7 @@ export interface ProjectProps {
 	createdAt: Date;
 	updatedAt?: Date | null;
 	documents: Document[];
+	requestedItems?: RequestedItem[];
 }
 
 export class Project extends Entity<ProjectProps> {
@@ -96,6 +98,9 @@ export class Project extends Entity<ProjectProps> {
 
 	get documents() {
 		return this.props.documents;
+	}
+	get requestedItems() {
+		return this.props.requestedItems;
 	}
 
 	static create(

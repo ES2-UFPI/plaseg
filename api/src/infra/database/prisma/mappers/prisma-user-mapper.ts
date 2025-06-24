@@ -15,12 +15,15 @@ export class PrismaUserMapper {
 				phone: raw.phone,
 				createdAt: raw.createdAt,
 				updatedAt: raw.updatedAt,
+
 				role:
-					raw.role === "ADMIN"
-						? Role.admin()
-						: raw.role === "ADMIN_MASTER"
+					raw.role === "ADMIN_MASTER"
 						? Role.adminMaster()
-						: Role.member(),
+						: raw.role === "ADMIN"
+						? Role.admin()
+						: raw.role === "COMPANY"
+						? Role.company()
+						: Role.municipality(),
 			},
 			new UniqueEntityID(raw.id)
 		);

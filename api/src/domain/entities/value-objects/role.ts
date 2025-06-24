@@ -3,10 +3,11 @@ import { Role as PrismaRole } from "@prisma/client";
 export enum DomainRole {
 	ADMIN = "ADMIN",
 	MUNICIPALITY = "MUNICIPALITY",
+	COMPANY = "COMPANY",
 	ADMIN_MASTER = "ADMIN_MASTER",
 }
 
-export type RoleType = "ADMIN" | "MUNICIPALITY" |"ADMIN_MASTER";
+export type RoleType = "ADMIN" | "MUNICIPALITY" | "COMPANY" | "ADMIN_MASTER";
 
 export class Role {
 	private readonly value: DomainRole;
@@ -25,6 +26,8 @@ export class Role {
 				return PrismaRole.ADMIN;
 			case DomainRole.MUNICIPALITY:
 				return PrismaRole.MUNICIPALITY;
+			case DomainRole.COMPANY:
+				return PrismaRole.COMPANY;
 			case DomainRole.ADMIN_MASTER:
 				return PrismaRole.ADMIN_MASTER;
 			default:
@@ -36,8 +39,12 @@ export class Role {
 		return new Role(DomainRole.ADMIN);
 	}
 
-	public static member(): Role {
+	public static municipality(): Role {
 		return new Role(DomainRole.MUNICIPALITY);
+	}
+
+	public static company(): Role {
+		return new Role(DomainRole.COMPANY);
 	}
 
 	public static adminMaster(): Role {
@@ -53,7 +60,9 @@ export class Role {
 			case DomainRole.ADMIN:
 				return Role.admin();
 			case DomainRole.MUNICIPALITY:
-				return Role.member();
+				return Role.municipality();
+			case DomainRole.COMPANY:
+				return Role.company();
 			case DomainRole.ADMIN_MASTER:
 				return Role.adminMaster();
 			default:
