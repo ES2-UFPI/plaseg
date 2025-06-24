@@ -1,23 +1,22 @@
 import { HTTPSuccessResponse, HTTPErrorResponse } from "@/@types/http/http";
 import { AxiosError } from "axios";
 import { api } from "@/services/axios";
-import { CreateSpecificProductRequest } from "@/@schemas/specific-product";
+import { CreateTypeRequest } from "@/@schemas/type";
 
-type CreateSpecificProductResponse =
-	| HTTPSuccessResponse<null>
-	| HTTPErrorResponse;
+type EditTypeResponse = HTTPSuccessResponse<null> | HTTPErrorResponse;
 
 /**
- * @description Adiciona um produto específico
+ * @description Adiciona um tipo
  * @param request
  * @returns
  */
-export async function createSpecificProduct(
-	request: CreateSpecificProductRequest
-): Promise<CreateSpecificProductResponse> {
+export async function editType(
+	id: string,
+	request: CreateTypeRequest
+): Promise<EditTypeResponse> {
 	try {
-		const response = await api.post<HTTPSuccessResponse<null>>(
-			"/specific-products",
+		const response = await api.put<HTTPSuccessResponse<null>>(
+			`/types/${id}`,
 			request
 		);
 

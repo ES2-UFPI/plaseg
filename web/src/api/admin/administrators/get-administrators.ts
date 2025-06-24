@@ -9,9 +9,8 @@ type GetAdministratorsResponse =
 
 export async function getAdministrators(): Promise<GetAdministratorsResponse> {
 	try {
-		const response = await api.get<HTTPSuccessResponse<Administrator[]>>(
-			"/admin"
-		);
+		const response =
+			await api.get<HTTPSuccessResponse<Administrator[]>>("/admin");
 
 		return response.data;
 	} catch (error) {

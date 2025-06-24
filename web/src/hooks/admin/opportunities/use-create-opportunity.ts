@@ -13,8 +13,8 @@ export function useCreateOpportunity(setIsFormOpen: (open: boolean) => void) {
 		defaultValues: {
 			title: "",
 			responsibleAgency: "",
-			initialDeadline: new Date(),
-			finalDeadline: new Date(),
+			initialDeadline: "",
+			finalDeadline: "",
 			availableValue: 0,
 			minValue: 0,
 			maxValue: 0,

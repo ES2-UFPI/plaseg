@@ -1,4 +1,4 @@
-export type HTTPSuccessResponse<T> = {
+export type HTTPSuccessResponse<T = null> = {
 	success: true;
 	errors: null;
 	data: T;
@@ -9,5 +9,3 @@ export type HTTPErrorResponse = {
 	errors: string[];
 	data: null;
 };
-
-export type HTTPResponse<T> = HTTPSuccessResponse<T> | HTTPErrorResponse;

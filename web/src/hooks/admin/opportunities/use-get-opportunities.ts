@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export function useGetOpportunities() {
 	const { data: result, isLoading: isLoadingGetOpportunities } = useQuery({
-		queryKey: ["opportunities"],
+		queryKey: ["get-opportunities"],
 		queryFn: getOpportunities,
 	});
 
