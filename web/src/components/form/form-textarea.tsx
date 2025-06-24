@@ -25,7 +25,7 @@ export function FormTextarea<TFieldValues extends FieldValues>({
 	entity,
 	placeholder,
 	rows = 3,
-	maxLength = 250,
+	maxLength = 1000,
 	className = "",
 	textAreaClassName = "",
 }: FormTextareaProps<TFieldValues>) {
@@ -46,6 +46,7 @@ export function FormTextarea<TFieldValues extends FieldValues>({
 							maxLength={maxLength}
 							className={textAreaClassName}
 							{...field}
+							value={field.value || ""}
 						/>
 					</FormControl>
 

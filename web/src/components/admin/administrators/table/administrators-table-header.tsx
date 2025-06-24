@@ -35,7 +35,7 @@ export function AdministratorsTableHeader({
 									: flexRender(
 											header.column.columnDef.header,
 											header.getContext()
-									  )}
+										)}
 							</TableHead>
 						);
 					})}

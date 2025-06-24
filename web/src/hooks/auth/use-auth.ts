@@ -9,15 +9,15 @@ interface AuthState {
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
-	userRole: Cookies.get("userRole") || null,
+	userRole: Cookies.get("user_role") || null,
 	isAuthenticated: !!Cookies.get("accessToken"),
 
 	authenticate: (accessToken, userRole) => {
-		Cookies.set("accessToken", accessToken, {
+		Cookies.set("plaseg_es2_token", accessToken, {
 			expires: 1 / 24, // 1 hour
 			secure: true,
 		});
-		Cookies.set("userRole", userRole, {
+		Cookies.set("user_role", userRole, {
 			expires: 1 / 24, // 1 hour
 			secure: true,
 		});
@@ -25,8 +25,8 @@ export const useAuthStore = create<AuthState>((set) => ({
 	},
 
 	logout: () => {
-		Cookies.remove("accessToken");
-		Cookies.remove("userRole");
+		Cookies.remove("plaseg_es2_token");
+		Cookies.remove("user_role");
 		set({ isAuthenticated: false, userRole: null });
 		window.location.href = "/entrar";
 	},

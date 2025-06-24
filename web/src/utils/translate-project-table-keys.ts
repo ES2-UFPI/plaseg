@@ -1,10 +1,10 @@
 export function translateProjectTableKeys(key: string): string {
 	const translations: Record<string, string> = {
 		id: "ID",
-		name: "Nome",
+		title: "Título",
 		opportunity: "Oportunidade",
 		createdAt: "Criado em",
-		requiredValue: "Valor Requerido",
+		requiredValue: "Valor Solicitado",
 		contrapartValue: "Contrapartida",
 		actions: "Ações",
 	};

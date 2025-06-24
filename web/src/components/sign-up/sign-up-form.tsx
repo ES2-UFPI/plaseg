@@ -1,16 +1,16 @@
-import { FormCombobox } from "@/components/form/form-combobox";
 import { Button } from "@/components/ui/button";
-import { Form } from "@/components/ui/form";
 import { useSignUp } from "@/hooks/auth/use-sign-up";
+import { Form } from "@/components/ui/form";
+import { FormInput } from "../form/form-input";
 import { LoaderCircle } from "lucide-react";
 import { FormDocumentInput } from "../form/form-document";
-import { FormInput } from "../form/form-input";
 import { FormPhoneInput } from "../form/form-phone-input";
+import { FormRadioGroup } from "../form/form-radio-group";
+import { Link } from "react-router";
 
 const roleOptions = [
-	{ label: "Empresa", value: "COMPANY" },
-	{ label: "Consultor", value: "CONSULTANT" },
 	{ label: "Município", value: "MUNICIPALITY" },
+	{ label: "Empresa", value: "COMPANY" },
 ];
 
 export function SignUpForm() {
@@ -57,22 +57,23 @@ export function SignUpForm() {
 					placeholder="Digite sua senha"
 				/>
 
-				<FormCombobox
+				<FormRadioGroup
 					form={form}
 					entity="role"
-					translatedEntity="Cargo"
-					placeholder="Selecione o cargo"
-					emptyMessage="Nenhum cargo encontrado"
+					label="Cargo"
 					options={roleOptions}
 				/>
 
 				<Button
-					type="submit"
+					type="button"
 					className="mt-2 w-full"
 					disabled={isLoadingSignUp}
+					asChild
 				>
-					{isLoadingSignUp && <LoaderCircle className="animate-spin" />}
-					Confirmar
+					<Link to="/cadastrar-municipio">
+						{isLoadingSignUp && <LoaderCircle className="animate-spin" />}
+						Confirmar
+					</Link>
 				</Button>
 			</form>
 		</Form>

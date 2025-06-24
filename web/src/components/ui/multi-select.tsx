@@ -1,5 +1,15 @@
-import { Badge } from "@/components/ui/badge";
+import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
+import { CheckIcon, X, ChevronDown, XIcon } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/components/ui/popover";
 import {
 	Command,
 	CommandEmpty,
@@ -9,16 +19,6 @@ import {
 	CommandList,
 	CommandSeparator,
 } from "@/components/ui/command";
-import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from "@/components/ui/popover";
-import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/utils";
-import { type VariantProps, cva } from "class-variance-authority";
-import { CheckIcon, ChevronDown, X, XIcon } from "lucide-react";
-import * as React from "react";
 
 export const multiSelectVariants = cva(
 	"m-1 bg-transparent border-red-500 text-black shadow-none! hover:bg-muted",
@@ -58,10 +58,7 @@ interface MultiSelectProps
 	className?: string;
 }
 
-export const MultiSelect = React.forwardRef<
-	HTMLButtonElement,
-	MultiSelectProps
->(
+export const MultiSelect = React.forwardRef<HTMLButtonElement, MultiSelectProps>(
 	(
 		{
 			options,

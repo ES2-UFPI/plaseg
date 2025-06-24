@@ -15,7 +15,6 @@ Uma plataforma que dá apoio na construção de projetos para editais de financi
 ## Como Usar
 
 1. **Você precisa ter o [NodeJS](https://en.wikipedia.org/wiki/Node.js) instalado na sua máquina para fazer o setup da aplicação.**
-
    - Instale o Node.js na sua máquina no site oficial do [Node.js](https://nodejs.org/en).
    - No Windows/Linux/MacOS instale o pnpm:
      ```bash

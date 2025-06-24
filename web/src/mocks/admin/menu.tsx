@@ -4,7 +4,6 @@ import {
 	UserCog,
 	Banknote,
 	FolderKanban,
-	Settings,
 	Users,
 } from "lucide-react";
 import { ReactNode } from "react";
@@ -65,13 +64,5 @@ export const adminMenuItems: MenuItem[] = [
 			"Controle o acesso ao sistema, gerencie perfis, permissões e dados dos administradores",
 		url: "/admin/administradores",
 		ready: true,
-	},
-	{
-		icon: <Settings size={24} className="text-blue-500" />,
-		title: "Configurações",
-		description:
-			"Gerencie as configurações do sistema, incluindo parâmetros, templates e notificações",
-		url: "/admin/configuracoes",
-		ready: false,
 	},
 ];
