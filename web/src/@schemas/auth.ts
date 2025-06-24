@@ -14,7 +14,7 @@ export const signUpRequestSchema = z.object({
 		.string()
 		.min(11, "O documento deve ter pelo menos 11 caracteres")
 		.max(14, "O documento deve ter no máximo 14 caracteres"),
-	role: z.enum(["MUNICIPALITY"]),
+	role: z.enum(["MUNICIPALITY", "COMPANY"]),
 	phone: z
 		.string()
 		.min(10, "O telefone deve ter pelo menos 10 caracteres")
@@ -22,4 +22,19 @@ export const signUpRequestSchema = z.object({
 	password: z.string().min(8, "A senha deve ter no mínimo 8 caracteres."),
 });
 
-export type SignUpRequest = z.infer<typeof signUpRequestSchema>;
+export type SignUpRequestBody = z.infer<typeof signUpRequestSchema>;
+
+export const getProfileResponseSchema = z.object({
+	id: z.string(),
+	name: z.string(),
+	email: z.string(),
+	role: z.enum([
+		"MUNICIPALITY",
+		"ADMIN",
+		"ADMIN_MASTER",
+		"COMPANY",
+		"CONSULTANT",
+	]),
+});
+
+export type GetProfileResponseBody = z.infer<typeof getProfileResponseSchema>;
