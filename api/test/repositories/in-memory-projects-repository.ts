@@ -1,5 +1,7 @@
 import { Project } from "../../src/domain/entities/project";
+import { ProjectWithMoreInfo } from "../../src/domain/entities/value-objects/project-with-more-info";
 import { ProjectsRepository } from "../../src/domain/repositories/project-repository";
+import { makeProjectWithMoreInfo } from "../factories/make-project-with-more-info";
 
 export class InMemoryProjectsRepository implements ProjectsRepository {
 	public items: Project[] = [];
@@ -8,6 +10,15 @@ export class InMemoryProjectsRepository implements ProjectsRepository {
 		const project = this.items.find((project) => project.id.toString() === id);
 
 		return project ?? null;
+	}
+	async findByIdWithMoreInfo(id: string): Promise<ProjectWithMoreInfo | null> {
+		const project = this.items.find((project) => project.id.toString() === id);
+
+		if (!project) {
+			return null;
+		}
+
+		return makeProjectWithMoreInfo(project);
 	}
 
 	async findByTitle(title: string): Promise<Project[] | null> {

@@ -4,6 +4,8 @@ import { createFieldsRecursively } from "../../../../domain/helpers/field-helper
 import { ProjectsRepository } from "../../../../domain/repositories/project-repository";
 import { Project } from "../../../../domain/entities/project";
 import { PrismaProjectMapper } from "../mappers/prisma-project-mapper";
+import { PrismaProjectWithMoreInfoMapper } from "../mappers/prisma-project-with-more-info-mapper";
+import { ProjectWithMoreInfo } from "../../../../domain/entities/value-objects/project-with-more-info";
 
 export class PrismaProjectsRepository implements ProjectsRepository {
 	async findById(id: string): Promise<Project | null> {
@@ -27,6 +29,60 @@ export class PrismaProjectsRepository implements ProjectsRepository {
 		return PrismaProjectMapper.toDomain({
 			...project,
 		});
+	}
+	async findByIdWithMoreInfo(id: string): Promise<ProjectWithMoreInfo | null> {
+		const project = await prisma.project.findUnique({
+			where: {
+				id,
+			},
+			include: {
+				documents: {
+					include: {
+						fields: true,
+					},
+				},
+				requestedItems: {
+					include: {
+						baseProduct: {
+							select: {
+								id: true,
+								name: true,
+								unitValue: true,
+							},
+						},
+					},
+				},
+				opportunity: {
+					select: {
+						id: true,
+						title: true,
+						counterpartPercentage: true,
+						requiresCounterpart: true,
+						maxValue: true,
+						availableValue: true,
+						minValue: true,
+					},
+				},
+				projectType: {
+					select: {
+						id: true,
+						name: true,
+					},
+				},
+				municipality: {
+					select: {
+						id: true,
+						name: true,
+					},
+				},
+			},
+		});
+
+		if (!project) {
+			return null;
+		}
+
+		return PrismaProjectWithMoreInfoMapper.toDomain(project);
 	}
 
 	async findByTitle(title: string): Promise<Project[] | null> {
