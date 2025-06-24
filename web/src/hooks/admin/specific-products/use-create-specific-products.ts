@@ -3,7 +3,7 @@ import { createSpecificProductRequestSchema } from "@/@schemas/specific-product"
 import { createSpecificProduct } from "@/api/admin/specific-products/create-specific-product";
 import { useState } from "react";
 import { toast } from "sonner";
-import { queryClient } from "@/lib/react-query";
+import { queryClient } from "@/services/react-query";
 import { useFormMutation } from "@/hooks/common/use-form-mutation";
 
 export function useCreateSpecificProduct() {

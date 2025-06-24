@@ -3,7 +3,7 @@ import { createAdministrator } from "@/api/admin/administrators/create-administr
 import { useFormMutation } from "@/hooks/common/use-form-mutation";
 import { createAdministratorBodySchema } from "@/@schemas/administrator";
 import { useState } from "react";
-import { queryClient } from "@/lib/react-query";
+import { queryClient } from "@/services/react-query";
 import { toast } from "sonner";
 
 export function useCreateAdministrator() {

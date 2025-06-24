@@ -30,8 +30,8 @@ export const opportunityRequestSchema = z.object({
 	responsibleAgency: z.string().min(1, "Órgão responsável é obrigatório"),
 	typeId: z.string().uuid().min(1, "Tipo é obrigatório"),
 	maxValue: z.number().min(0, "Valor máximo deve ser maior que 0"),
-	initialDeadline: z.coerce.date().min(new Date(), "Data de início é obrigatória"),
-	finalDeadline: z.coerce.date().min(new Date(), "Data de término é obrigatória"),
+	initialDeadline: z.string().min(1, "Data de início é obrigatória"),
+	finalDeadline: z.string().min(1, "Data de término é obrigatória"),
 	requiresCounterpart: z.boolean().default(false),
 	counterpartPercentage: z.coerce.number().min(0).max(100).default(0),
 	projectTypeIds: z
@@ -45,11 +45,11 @@ export type OpportunityRequest = z.infer<typeof opportunityRequestSchema>;
 
 export const opportunitySchema = z.object({
 	id: z.string().uuid(),
+	slug: z.string(),
 	title: z.string(),
 	description: z.string(),
 	availableValue: z.number(),
 	responsibleAgency: z.string(),
-	type: z.string(),
 	minValue: z.number(),
 	maxValue: z.number(),
 	initialDeadline: z.coerce.date(),
@@ -57,7 +57,6 @@ export const opportunitySchema = z.object({
 	requiresCounterpart: z.boolean(),
 	counterpartPercentage: z.number(),
 	type: z.string(),
-	typeId: z.string().uuid(),
 	isActive: z.boolean(),
 	createdAt: z.coerce.date(),
 	updatedAt: z.coerce.date().nullable().optional(),
@@ -92,4 +91,4 @@ export const getOpportunitiesResponseSchema = z
 	.array(opportunitySchema)
 	.nullable();
 
-export type OpportunitySchema = z.infer<typeof opportunitySchema>;
+export type Opportunity = z.infer<typeof opportunitySchema>;

@@ -3,7 +3,7 @@ import type {
 	HTTPErrorResponse,
 	HTTPSuccessResponse,
 } from "@/@types/http/http";
-import { api } from "@/lib/axios";
+import { api } from "@/services/axios";
 import { AxiosError } from "axios";
 
 type CreateTypeResponse = HTTPSuccessResponse<null> | HTTPErrorResponse;

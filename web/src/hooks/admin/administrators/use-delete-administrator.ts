@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { deleteAdministrator } from "@/api/admin/administrators/delete-administrator";
 import { toast } from "sonner";
 import { useState } from "react";
-import { queryClient } from "@/lib/react-query";
+import { queryClient } from "@/services/react-query";
 
 export function useDeleteAdministrator() {
 	const [isDeleteAdministratorDialogOpen, setIsDeleteAdministratorDialogOpen] =

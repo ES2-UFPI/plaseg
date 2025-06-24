@@ -5,7 +5,7 @@ import { useFormMutation } from "@/hooks/common/use-form-mutation";
 import { useMutation } from "@tanstack/react-query";
 import { createOpportunity } from "@/api/admin/opportunities/create-opportunity";
 import { toast } from "sonner";
-import { queryClient } from "@/lib/react-query";
+import { queryClient } from "@/services/react-query";
 
 export function useCreateOpportunity(setIsFormOpen: (open: boolean) => void) {
 	const form = useFormMutation({
