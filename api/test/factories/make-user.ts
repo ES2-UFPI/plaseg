@@ -9,7 +9,7 @@ export function makeUser(override: Partial<UserProps> = {}) {
 		document: "11122233344",
 		password: "12345678",
 		email: Email.create("john@doe.com"),
-		role: Role.member(),
+		role: Role.municipality(),
 		...override,
 	});
 

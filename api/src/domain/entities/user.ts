@@ -12,6 +12,7 @@ export interface UserProps {
 	document: string;
 	role: Role;
 	password: string;
+	allowed?: boolean;
 	createdAt: Date;
 	updatedAt?: Date | null;
 }
@@ -41,6 +42,14 @@ export class User extends Entity<UserProps> {
 		return this.props.role;
 	}
 
+	get allowed() {
+		return this.props.allowed ?? false;
+	}
+
+	set allowed(allowed: boolean) {
+		this.props.allowed = allowed;
+	}
+
 	get createdAt() {
 		return this.props.createdAt;
 	}
@@ -48,6 +57,7 @@ export class User extends Entity<UserProps> {
 	get updatedAt() {
 		return this.props.updatedAt;
 	}
+
 	static create(
 		props: Optional<UserProps, "createdAt" | "role">,
 		id?: UniqueEntityID
@@ -57,7 +67,8 @@ export class User extends Entity<UserProps> {
 				...props,
 				createdAt: props.createdAt ?? getCurrentDate(),
 				updatedAt: null,
-				role: props.role ?? Role.member(),
+				role: props.role ?? Role.municipality(),
+				allowed: props.allowed ?? false,
 			},
 			id
 		);

@@ -22,6 +22,7 @@ enum Role {
   ADMIN
   MUNICIPALITY
   ADMIN_MASTER
+  COMPANY
 }
 
 enum TypeGroup {

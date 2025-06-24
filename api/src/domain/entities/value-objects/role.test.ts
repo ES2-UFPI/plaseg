@@ -11,7 +11,7 @@ describe("Role Value Object", () => {
 		});
 
 		it("should create member role", () => {
-			const role = Role.member();
+			const role = Role.municipality();
 			expect(role.getValue()).toBe(DomainRole.MUNICIPALITY);
 			expect(role.toString()).toBe("MUNICIPALITY");
 		});
@@ -20,7 +20,7 @@ describe("Role Value Object", () => {
 	describe("getValue", () => {
 		it("should return the correct domain role value", () => {
 			const adminRole = Role.admin();
-			const memberRole = Role.member();
+			const memberRole = Role.municipality();
 
 			expect(adminRole.getValue()).toBe(DomainRole.ADMIN);
 			expect(memberRole.getValue()).toBe(DomainRole.MUNICIPALITY);
@@ -34,7 +34,7 @@ describe("Role Value Object", () => {
 		});
 
 		it("should convert member role to Prisma role", () => {
-			const role = Role.member();
+			const role = Role.municipality();
 			expect(role.toPrisma()).toBe(PrismaRole.MUNICIPALITY);
 		});
 
@@ -49,7 +49,7 @@ describe("Role Value Object", () => {
 	describe("toString", () => {
 		it("should return string representation of the role", () => {
 			const adminRole = Role.admin();
-			const memberRole = Role.member();
+			const memberRole = Role.municipality();
 
 			expect(adminRole.toString()).toBe("ADMIN");
 			expect(memberRole.toString()).toBe("MUNICIPALITY");
