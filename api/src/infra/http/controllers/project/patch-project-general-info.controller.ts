@@ -31,10 +31,8 @@ export async function patchProjectGeneralInfo(app: FastifyInstance) {
 			},
 		},
 		async (request, reply) => {
-			const { projectId } = patchProjectGeneralInfoParamsSchema.parse(
-				request.params
-			);
-			const data = patchProjectGeneralInfoBodySchema.parse(request.body);
+			const { projectId } = request.params;
+			const data = request.body;
 
 			const patchProjectGeneralInfoUseCase =
 				makePatchProjectGeneralInfoUseCase();
