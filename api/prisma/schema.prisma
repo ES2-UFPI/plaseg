@@ -86,9 +86,9 @@ model Municipality {
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
+  Project   Project[]
 
   @@map("municipalities")
-  Project Project[]
 }
 
 model AllocationDepartment {
@@ -99,11 +99,11 @@ model AllocationDepartment {
   municipalityId String
   municipality   Municipality @relation(fields: [municipalityId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime?       @updatedAt
+  RequestedItem RequestedItem[]
 
   @@map("allocation_departments")
-  RequestedItem RequestedItem[]
 }
 
 model MaintenanceContract {
@@ -114,11 +114,11 @@ model MaintenanceContract {
   municipalityId String
   municipality   Municipality @relation(fields: [municipalityId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime?       @updatedAt
+  RequestedItem RequestedItem[]
 
   @@map("maintenance_contracts")
-  RequestedItem RequestedItem[]
 }
 
 model QualifiedStaff {
@@ -263,6 +263,7 @@ model RequestedItem {
   maintenanceContract   MaintenanceContract? @relation(fields: [maintenanceContractId], references: [id], onDelete: Cascade)
   maintenanceContractId String?
 
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId String
 
   @@map("requested_itens")
@@ -286,11 +287,11 @@ model BaseProduct {
 
   SpecificProduct SpecificProduct[]
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime?       @updatedAt
+  RequestedItem RequestedItem[]
 
   @@map("base_products")
-  RequestedItem RequestedItem[]
 }
 
 model SpecificProduct {
@@ -343,12 +344,11 @@ model Document {
 
   projectType   ProjectType? @relation(fields: [projectTypeId], references: [id])
   projectTypeId String?
-  
-  fields Field[]
 
+  fields  Field[]
+  Project Project[]
 
   @@map("documents")
-  Project Project[]
 }
 
 model ProjectType {
@@ -359,12 +359,11 @@ model ProjectType {
   updatedAt DateTime? @updatedAt
 
   documents              Document[]
+  Project                Project[]
+  OpportunityProjectType OpportunityProjectType[]
 
   @@map("project_types")
-  Project Project[]
-  OpportunityProjectType OpportunityProjectType[]
 }
-
 
 model Project {
   id                            String   @id @default(uuid())
@@ -394,6 +393,7 @@ model Project {
   municipalityId String
 
   documents      Document[]
+  requestedItems RequestedItem[]
 
   @@map("projects")
 }
