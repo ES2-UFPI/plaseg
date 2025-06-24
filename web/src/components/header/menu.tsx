@@ -1,4 +1,3 @@
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -6,7 +5,8 @@ import {
 	DropdownMenuItem,
 	DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { useAuthStore } from "@/stores/auth";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useAuthStore } from "@/hooks/auth/use-auth";
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { LogOut, Settings } from "lucide-react";
 import { Link } from "react-router";
@@ -22,8 +22,8 @@ export function Menu({ name, email }: MenuProps) {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger className="outline-none">
-				<div className="flex items-center justify-between gap-3 w-[250px]">
-					<div className="flex flex-col items-start gap-0 truncate">
+				<div className="flex items-center gap-3">
+					<div className="flex flex-col items-start gap-0">
 						<strong className="text-sm">{name}</strong>
 
 						<span className="text-sm font-medium text-muted-foreground">
@@ -41,8 +41,8 @@ export function Menu({ name, email }: MenuProps) {
 
 			<DropdownMenuContent className="w-56 mr-4">
 				<DropdownMenuGroup>
-					<DropdownMenuItem className="cursor-pointer w-full">
-						<Link to="#" className="flex items-center gap-2">
+					<DropdownMenuItem className="cursor-pointer w-full" disabled>
+						<Link to="/configuracoes" className="flex items-center gap-2">
 							<Settings className="h-4 w-4" />
 
 							<span>Configurações</span>
@@ -56,7 +56,7 @@ export function Menu({ name, email }: MenuProps) {
 					className="cursor-pointer w-full !text-red-500"
 					onClick={() => logout()}
 				>
-					<LogOut className="h-4 w-4 text-red-500" />
+					<LogOut className="h-4 w-4 !text-red-500" />
 
 					<span>Sair</span>
 				</DropdownMenuItem>

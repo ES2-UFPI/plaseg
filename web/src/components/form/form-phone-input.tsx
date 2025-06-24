@@ -1,14 +1,14 @@
+import type React from "react";
+import { useState, useEffect } from "react";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 import {
-	FormControl,
 	FormField,
 	FormItem,
 	FormLabel,
+	FormControl,
 	FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
-import type React from "react";
-import { useEffect, useState } from "react";
 import type { FieldValues, Path, UseFormReturn } from "react-hook-form";
 
 interface FormPhoneInputProps<TFieldValues extends FieldValues> {
@@ -65,8 +65,10 @@ function PhoneInputAdapter({
 	const [inputValue, setInputValue] = useState<string>("");
 
 	useEffect(() => {
-		if (value !== undefined) {
+		if (value !== undefined && value !== null) {
 			setInputValue(formatPhone(value.toString()));
+		} else {
+			setInputValue("");
 		}
 	}, [value]);
 
@@ -85,7 +87,7 @@ function PhoneInputAdapter({
 		<Input
 			className={cn(className)}
 			placeholder={placeholder}
-			value={inputValue}
+			value={inputValue || ""}
 			onChange={handleChange}
 			id={id}
 			type="tel"

@@ -19,9 +19,9 @@ export function TypesTableHeader({
 	],
 }: TypesTableHeaderProps) {
 	return (
-		<TableHeader>
+		<TableHeader className="bg-slate-50">
 			{table.getHeaderGroups().map((headerGroup) => (
-				<TableRow key={headerGroup.id}>
+				<TableRow key={headerGroup.id} className="border-none">
 					{headerGroup.headers.map((header) => {
 						return (
 							<TableHead
@@ -33,7 +33,7 @@ export function TypesTableHeader({
 									: flexRender(
 											header.column.columnDef.header,
 											header.getContext()
-									  )}
+										)}
 							</TableHead>
 						);
 					})}

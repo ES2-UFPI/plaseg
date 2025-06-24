@@ -11,6 +11,9 @@ body {
 }
 
 @theme inline {
+	--color-dark: #02050c;
+	--color-button: #3294f4;
+
 	--radius-sm: calc(var(--radius) - 4px);
 	--radius-md: calc(var(--radius) - 2px);
 	--radius-lg: var(--radius);

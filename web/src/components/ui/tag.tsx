@@ -10,7 +10,7 @@ export function Tag({ children, className }: TagProps) {
 	return (
 		<Badge
 			className={cn(
-				"rounded-md bg-muted hover:bg-muted text-slate-600 shadow-none",
+				"rounded-md bg-slate-100 hover:bg-slate-100 text-slate-600 shadow-none",
 				className
 			)}
 		>

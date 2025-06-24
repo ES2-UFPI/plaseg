@@ -32,8 +32,7 @@ export function BaseProductForm({
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmitForm}
-				className="shadow-none border-muted rounded-lg flex flex-col justify-between flex-1
-				px-4 pb-4"
+				className="shadow-none border-muted rounded-lg flex flex-col justify-between flex-1"
 			>
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 					<div className="grid grid-cols-2 col-span-3 gap-4">

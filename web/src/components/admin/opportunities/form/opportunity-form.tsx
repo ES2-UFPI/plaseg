@@ -41,7 +41,7 @@ export function OpportunityForm({ setIsFormOpen }: OpportunityFormProps) {
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmitForm} className="space-y-6 p-4 pt-0">
+			<form onSubmit={form.handleSubmitForm} className="space-y-6">
 				<div className="space-y-4">
 					<h3 className="text-lg font-semibold">Informações Básicas</h3>
 

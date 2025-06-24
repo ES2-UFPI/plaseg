@@ -8,7 +8,6 @@ import Contracts from "@/pages/admin/contracts";
 import Administrators from "@/pages/admin/administrators";
 import BaseProducts from "@/pages/admin/base-products";
 import ProjectTypes from "@/pages/admin/project-types";
-import Settings from "@/pages/admin/settings";
 import Users from "@/pages/admin/users";
 
 export function AdminRoutes() {
@@ -21,7 +20,6 @@ export function AdminRoutes() {
 			<Route path="tipos-de-projeto" element={<ProjectTypes />} />
 			<Route path="produtos-base" element={<BaseProducts />} />
 			<Route path="contratos" element={<Contracts />} />
-			<Route path="configuracoes" element={<Settings />} />
 			<Route path="usuarios" element={<Users />} />
 		</Routes>
 	);

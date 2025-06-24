@@ -11,7 +11,7 @@ export function NavbarItem({ link, title, icon }: NavbarItemProps) {
 	const { pathname } = useLocation();
 
 	const styles = pathname.includes(link)
-		? "bg-slate-800/70 text-blue-500"
+		? "bg-[#1A202C] text-blue-500"
 		: "text-slate-400";
 
 	return (

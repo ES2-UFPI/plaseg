@@ -23,6 +23,7 @@ interface FormSelectProps<TFieldValues extends FieldValues> {
 	options: { label: string; value: string }[];
 	placeholder?: string;
 	className?: string;
+	value?: string;
 }
 
 export function FormSelect<TFieldValues extends FieldValues>({

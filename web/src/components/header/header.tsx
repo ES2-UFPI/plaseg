@@ -1,5 +1,5 @@
-import type { ReactNode } from "react";
 import { useGetProfile } from "@/hooks/auth/use-get-profile";
+import type { ReactNode } from "react";
 import { Link } from "react-router";
 import { MenuSkeleton } from "./menu-skeleton";
 import { Menu } from "./menu";
@@ -20,8 +20,8 @@ export function Header({ children }: HeaderProps) {
 
 				{isLoadingGetProfile && <MenuSkeleton />}
 
-				{!isLoadingGetProfile && user && (
-					<Menu name={user.name} email={user.email} />
+				{!isLoadingGetProfile && (
+					<Menu name={user?.name ?? ""} email={user?.email ?? ""} />
 				)}
 			</div>
 

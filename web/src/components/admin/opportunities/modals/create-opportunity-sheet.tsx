@@ -33,14 +33,15 @@ export function CreateOpportunitySheet({
 				</Button>
 			</SheetTrigger>
 
-			<SheetContent className="w-full md:max-w-[1000px] outline-none overflow-y-auto flex
-			flex-col">
+			<SheetContent className="w-full md:max-w-[1000px] outline-none overflow-y-auto flex flex-col gap-6">
 				<SheetHeader>
 					<SheetTitle>Nova Oportunidade</SheetTitle>
 					<SheetDescription>Adicione uma nova oportunidade.</SheetDescription>
 				</SheetHeader>
 
-				<OpportunityForm setIsFormOpen={setIsCreateOpportunitySheetOpen} />
+				<OpportunityForm
+					setIsFormOpen={setIsCreateOpportunitySheetOpen}
+				/>
 			</SheetContent>
 		</Sheet>
 	);

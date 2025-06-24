@@ -1,8 +1,9 @@
 import { Navigate, Route, Routes } from "react-router";
 
+import { AdminRoutes } from "./admin-routes";
+
 import { PrivateRoutes } from "./private-routes";
 import { PublicRoutes } from "./public-routes";
-import { AdminRoutes } from "./admin-routes";
 import { AdminPrivateRoutes } from "./admin-private-routes";
 
 import AdminLayout from "@/layouts/admin-layout";

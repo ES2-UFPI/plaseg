@@ -5,7 +5,7 @@ import {
 	FormControl,
 	FormMessage,
 } from "@/components/ui/form";
-import { type FieldValues, type Path, type UseFormReturn } from "react-hook-form";
+import { FieldValues, Path, UseFormReturn } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -48,11 +48,11 @@ export function FormInput<TFieldValues extends FieldValues>({
 						) : (
 							<Input
 								type={type}
-								className={inputClassName}
 								id={entity}
 								placeholder={
 									placeholder || `Digite ${entity ? `o ${entity}` : ""}`
 								}
+								className={inputClassName}
 								{...field}
 							/>
 						)}
