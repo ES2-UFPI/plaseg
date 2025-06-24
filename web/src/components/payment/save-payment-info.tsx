@@ -6,7 +6,7 @@ export function SavePaymentInfo() {
 			<Checkbox id="terms2" />
 			<label
 				htmlFor="terms2"
-				className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opamunicipality-70"
+				className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
 			>
 				Salvar Informações de Pagamento
 			</label>
