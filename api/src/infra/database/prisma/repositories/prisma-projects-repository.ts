@@ -16,7 +16,7 @@ export class PrismaProjectsRepository implements ProjectsRepository {
 					include: {
 						fields: true,
 					},
-				}
+				},
 			},
 		});
 
@@ -39,7 +39,7 @@ export class PrismaProjectsRepository implements ProjectsRepository {
 					include: {
 						fields: true,
 					},
-				}
+				},
 			},
 		});
 
@@ -57,7 +57,7 @@ export class PrismaProjectsRepository implements ProjectsRepository {
 					include: {
 						fields: true,
 					},
-				}
+				},
 			},
 		});
 
@@ -78,7 +78,7 @@ export class PrismaProjectsRepository implements ProjectsRepository {
 					include: {
 						fields: true,
 					},
-				}
+				},
 			},
 		});
 
@@ -110,5 +110,35 @@ export class PrismaProjectsRepository implements ProjectsRepository {
 			}
 		});
 	}
-
+	async updateGeneralInfo(
+		projectId: string,
+		data: {
+			responsibleCpf?: string;
+			responsibleName?: string;
+			responsibleEmail?: string;
+			responsiblePhone?: string;
+			counterpartCapitalItem?: string;
+			counterpartCapitalValue?: number;
+			counterpartOperatingCostCode?: string;
+			counterpartOperatingCostValue?: number;
+			baseValue?: number;
+		}
+	): Promise<void> {
+		await prisma.project.update({
+			where: {
+				id: projectId,
+			},
+			data: {
+				responsibleCpf: data.responsibleCpf,
+				responsibleName: data.responsibleName,
+				responsibleEmail: data.responsibleEmail,
+				responsiblePhone: data.responsiblePhone,
+				counterpartCapitalItem: data.counterpartCapitalItem,
+				counterpartCapitalValue: data.counterpartCapitalValue,
+				counterpartOperatingCostCode: data.counterpartOperatingCostCode,
+				counterpartOperatingCostValue: data.counterpartOperatingCostValue,
+				baseValue: data.baseValue,
+			},
+		});
+	}
 }

@@ -31,4 +31,54 @@ export class InMemoryProjectsRepository implements ProjectsRepository {
 	async create(project: Project): Promise<void> {
 		this.items.push(project);
 	}
+	async updateGeneralInfo(
+		projectId: string,
+		data: {
+			responsibleCpf?: string;
+			responsibleName?: string;
+			responsibleEmail?: string;
+			responsiblePhone?: string;
+			counterpartCapitalItem?: string;
+			counterpartCapitalValue?: number;
+			counterpartOperatingCostCode?: string;
+			counterpartOperatingCostValue?: number;
+			baseValue?: number;
+		}
+	): Promise<void> {
+		const projectIndex = this.items.findIndex(
+			(project) => project.id.toString() === projectId
+		);
+
+		if (projectIndex >= 0) {
+			const project = this.items[projectIndex];
+			const updatedProject = Project.create(
+				{
+					title: project.title,
+					documents: project.documents,
+					opportunityId: project.opportunityId,
+					projectTypeId: project.projectTypeId,
+					municipalityId: project.municipalityId,
+					responsibleCpf: data.responsibleCpf ?? project.responsibleCpf,
+					responsibleName: data.responsibleName ?? project.responsibleName,
+					responsibleEmail: data.responsibleEmail ?? project.responsibleEmail,
+					responsiblePhone: data.responsiblePhone ?? project.responsiblePhone,
+					counterpartCapitalItem:
+						data.counterpartCapitalItem ?? project.counterpartCapitalItem,
+					counterpartCapitalValue:
+						data.counterpartCapitalValue ?? project.counterpartCapitalValue,
+					counterpartOperatingCostCode:
+						data.counterpartOperatingCostCode ??
+						project.counterpartOperatingCostCode,
+					counterpartOperatingCostValue:
+						data.counterpartOperatingCostValue ??
+						project.counterpartOperatingCostValue,
+					baseValue: data.baseValue ?? project.baseValue,
+					requestedItems: project.requestedItems,
+				},
+				project.id
+			);
+
+			this.items[projectIndex] = updatedProject;
+		}
+	}
 }
