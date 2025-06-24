@@ -2,17 +2,21 @@ import {
 	Prisma,
 	Opportunity as PrismaOpportunity,
 	RequiredDocument as PrismaRequiredDocument,
+	Document as PrismaDocument,
+	Field as PrismaField,
 } from "@prisma/client";
 import { Opportunity } from "../../../../domain/entities/opportunity";
 import { UniqueEntityID } from "../../../../core/entities/unique-entity-id";
 import { RequiredDocument } from "../../../../domain/entities/required-document";
 import { getCurrentDate } from "../../../../core/utils/get-current-date";
+import { PrismaDocumentMapper } from "./prisma-document-mapper";
 
 export class PrismaOpportunityMapper {
 	static toDomain(
 		raw: PrismaOpportunity & {
 			type: string;
 			requiredDocuments: PrismaRequiredDocument[];
+			documents: (PrismaDocument & { fields: PrismaField[] })[];
 		}
 	): Opportunity {
 		const requiredDocuments = raw.requiredDocuments.map((doc) =>
@@ -27,6 +31,8 @@ export class PrismaOpportunityMapper {
 				new UniqueEntityID(doc.id)
 			)
 		);
+
+		const documents = raw.documents.map(PrismaDocumentMapper.toDomain);
 
 		return Opportunity.create(
 			{
@@ -44,6 +50,7 @@ export class PrismaOpportunityMapper {
 				type: raw.type,
 				typeId: raw.typeId,
 				requiredDocuments,
+				documents,
 				createdAt: raw.createdAt,
 				updatedAt: raw.updatedAt,
 			},
