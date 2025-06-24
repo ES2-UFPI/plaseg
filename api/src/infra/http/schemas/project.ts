@@ -16,3 +16,15 @@ export const createProjectRequestedItemBodySchema = z.object({
 	allocationDepartmentId: z.string().uuid(),
 	maintenanceContractId: z.string().uuid(),
 });
+
+export const patchProjectGeneralInfoParamsSchema = z.object({
+	projectId: z.string().uuid(),
+});
+
+export const patchProjectGeneralInfoBodySchema = z.object({
+	responsibleCpf: z.string().optional(),
+	responsibleName: z.string().optional(),
+	responsibleEmail: z.string().email().optional(),
+	responsiblePhone: z.string().optional(),
+	baseValue: z.number().positive().optional(),
+});
