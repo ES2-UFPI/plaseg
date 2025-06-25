@@ -10,6 +10,7 @@ interface Field {
 	name: string;
 	value: string | null;
 	fields: Field[] | null;
+	order: string;
 }
 
 export function nestFields(originalFields: OriginalField[]): Field[] {
@@ -21,6 +22,7 @@ export function nestFields(originalFields: OriginalField[]): Field[] {
 			name: field.name,
 			value: field.value,
 			fields: null,
+			order: "",
 		});
 	});
 
@@ -43,6 +45,18 @@ export function nestFields(originalFields: OriginalField[]): Field[] {
 			}
 		}
 	});
+
+	function assignOrder(fields: Field[], prefix: string = "") {
+		fields.forEach((field, idx) => {
+			const currentOrder = prefix ? `${prefix}.${idx + 1}` : `${idx + 1}`;
+			field.order = currentOrder;
+			if (field.fields && field.fields.length > 0) {
+				assignOrder(field.fields, currentOrder);
+			}
+		});
+	}
+
+	assignOrder(rootFields);
 
 	return rootFields;
 }

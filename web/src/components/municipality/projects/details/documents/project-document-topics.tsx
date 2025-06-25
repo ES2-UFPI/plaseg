@@ -21,7 +21,7 @@ export function ProjectDocumentTopics({
 				<h2 className="text-xl font-semibold">Tópicos</h2>
 
 				<span className="text-muted-foreground text-sm">
-					0 de {fieldsWithoutValue.length} concluídos
+					3 de {fieldsWithoutValue.length} concluídos
 				</span>
 			</div>
 
@@ -36,11 +36,12 @@ export function ProjectDocumentTopics({
 							)}
 
 							<span
-								className={`text-sm font-medium ${
+								className={`text-sm flex gap-2 font-medium ${
 									field.value ? "" : "text-muted-foreground"
 								}`}
 							>
-								{field.name}
+								{field.order}.
+								<span>{field.name}</span>
 							</span>
 						</div>
 
@@ -55,11 +56,12 @@ export function ProjectDocumentTopics({
 										)}
 
 										<span
-											className={`text-sm font-medium ${
+											className={`text-sm flex gap-2 font-medium ${
 												nestedField.value ? "" : "text-muted-foreground"
 											}`}
 										>
-											{nestedField.name}
+											{nestedField.order}.
+											<span>{nestedField.name}</span>
 										</span>
 									</div>
 								))}
