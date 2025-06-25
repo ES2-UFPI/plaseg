@@ -19,7 +19,7 @@ export function TypesTableHeader({
 	],
 }: TypesTableHeaderProps) {
 	return (
-		<TableHeader className="bg-slate-50">
+		<TableHeader className="bg-muted">
 			{table.getHeaderGroups().map((headerGroup) => (
 				<TableRow key={headerGroup.id} className="border-none">
 					{headerGroup.headers.map((header) => {

@@ -10,7 +10,7 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>((set) => ({
 	userRole: Cookies.get("user_role") || null,
-	isAuthenticated: !!Cookies.get("accessToken"),
+	isAuthenticated: !!Cookies.get("plaseg_es2_token"),
 
 	authenticate: (accessToken, userRole) => {
 		Cookies.set("plaseg_es2_token", accessToken, {
