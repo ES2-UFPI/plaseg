@@ -1,10 +1,32 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Check, LoaderCircle, SquarePen } from "lucide-react";
+import { Check, LoaderCircle, Sparkles, SquarePen } from "lucide-react";
 import { useState } from "react";
 import { Document } from "@/@schemas/project";
 import { ProjectFieldCancelationDialog } from "./project-field-cancelation-dialog";
 import { useUpdateDocumentFieldValue } from "@/hooks/municipalities/projects/use-update-document-field-value";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
+import { generateText } from "ai";
+import { env } from "@/env";
+import { useImproveFieldValue } from "@/hooks/municipalities/projects/use-improve-field-value";
+
+const google = createGoogleGenerativeAI({
+	apiKey: env.VITE_GOOGLE_GENERATIVE_AI_API_KEY,
+});
+
+async function improveText(text: string): Promise<string> {
+	const model = google("gemini-1.5-flash");
+
+	const { text: improvedText } = await generateText({
+		model,
+		prompt: `Melhore e aprimore o seguinte texto em português,
+		mantendo o sentido original mas tornando-o mais claro,
+		profissional, bem estruturado e eloquente.
+		Retorne apenas o texto melhorado, sem explicações: "${text}"`,
+	});
+
+	return improvedText;
+}
 
 interface ProjectDocumentTopicProps {
 	field: Document["fields"][number];
@@ -14,6 +36,8 @@ export function ProjectDocumentTopic({ field }: ProjectDocumentTopicProps) {
 	const [fieldValue, setFieldValue] = useState(field.value);
 	const [isEditing, setIsEditing] = useState(false);
 	const [isDone, setIsDone] = useState(false);
+	const [isImproving, setIsImproving] = useState(false);
+	const { improveWithContext } = useImproveFieldValue();
 
 	const { updateDocumentFieldValueFn, isLoadingUpdateDocumentFieldValue } =
 		useUpdateDocumentFieldValue({
@@ -23,6 +47,18 @@ export function ProjectDocumentTopic({ field }: ProjectDocumentTopicProps) {
 				setIsDone(true);
 			},
 		});
+
+	async function handleImproveText() {
+		setIsImproving(true);
+		try {
+			const improved = await improveWithContext(fieldValue ?? "");
+			setFieldValue(improved);
+		} catch (e) {
+			console.log(e);
+		} finally {
+			setIsImproving(false);
+		}
+	}
 
 	return (
 		<div className={`flex flex-col ${field.value ? "mb-12" : ""}`}>
@@ -85,9 +121,20 @@ export function ProjectDocumentTopic({ field }: ProjectDocumentTopicProps) {
 			{!isEditing && <p className="text-slate-600">{fieldValue}</p>}
 
 			{isEditing && (
-				<div className="flex items-center gap-2 self-end">
+				<div className="flex items-center gap-2">
+					<Button
+						variant="outline"
+						className="mr-auto"
+						onClick={() => handleImproveText()}
+						disabled={isImproving}
+					>
+						{isImproving && <LoaderCircle className="animate-spin" />}
+						{!isImproving && <Sparkles />}
+						Gerar nova sugestão
+					</Button>
+
 					<Button variant="outline" onClick={() => setIsEditing(false)}>
-						Descartar alterações
+						Cancelar
 					</Button>
 
 					<Button
