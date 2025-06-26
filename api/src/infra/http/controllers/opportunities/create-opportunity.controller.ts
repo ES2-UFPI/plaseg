@@ -31,10 +31,7 @@ export async function createOpportunity(app: FastifyInstance) {
 
 			const createOpportunityUseCase = makeCreateOpportunityUseCase();
 
-			const result = await createOpportunityUseCase.execute({
-				...body,
-				counterpartPercentage: body.counterpartPercentage ?? undefined,
-			});
+			const result = await createOpportunityUseCase.execute(body);
 
 			if (result.isLeft()) {
 				return reply.status(result.value.statusCode).send({

@@ -1,31 +1,34 @@
-import type {
-	HTTPErrorResponse,
-	HTTPSuccessResponse,
-} from "@/@types/http/http";
-import { api } from "@/lib/axios";
+import { HTTPErrorResponse, HTTPSuccessResponse } from "@/@types/http/http";
+import { api } from "@/services/axios";
 import { AxiosError } from "axios";
 
-type SignInRequestBody = {
+interface SignInRequest {
 	email: string;
 	password: string;
-};
+}
 
-type SignInResponseBody = {
+interface SignInResponseData {
 	accessToken: string;
-};
+	user: {
+		id: string;
+		name: string;
+		email: string;
+		role: string;
+	};
+}
 
 type SignInResponse =
-	| HTTPSuccessResponse<SignInResponseBody>
+	| HTTPSuccessResponse<SignInResponseData>
 	| HTTPErrorResponse;
 
-/**
- * @description Realiza o login do usuário
- * @param data Dados do login
- * @returns Resposta da API
- */
-export async function signIn(data: SignInRequestBody): Promise<SignInResponse> {
+export async function signIn(
+	credentials: SignInRequest
+): Promise<SignInResponse> {
 	try {
-		const response = await api.post<SignInResponse>("/auth/sign-in", data);
+		const response = await api.post<SignInResponse>(
+			"/auth/sign-in",
+			credentials
+		);
 
 		return response.data;
 	} catch (error) {

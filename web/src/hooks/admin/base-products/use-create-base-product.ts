@@ -3,7 +3,7 @@ import { createBaseProductRequestSchema } from "@/@schemas/base-product";
 import { createBaseProduct } from "@/api/admin/base-products/create-base-product";
 import { useState } from "react";
 import { toast } from "sonner";
-import { queryClient } from "@/lib/react-query";
+import { queryClient } from "@/services/react-query";
 import { useFormMutation } from "@/hooks/common/use-form-mutation";
 
 export function useCreateBaseProduct() {

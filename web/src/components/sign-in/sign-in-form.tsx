@@ -1,8 +1,8 @@
 import { useSignIn } from "@/hooks/auth/use-sign-in";
-import { LoaderCircle } from "lucide-react";
 import { FormInput } from "../form/form-input";
-import { Button } from "../ui/button";
 import { Form } from "../ui/form";
+import { Button } from "../ui/button";
+import { LoaderCircle } from "lucide-react";
 
 export function SignInForm() {
 	const { form, isLoadingSignIn } = useSignIn();
@@ -25,6 +25,11 @@ export function SignInForm() {
 					label="Senha"
 					placeholder="Digite sua senha"
 				/>
+
+				<span className="text-xs block text-left">
+					A senha deve possuir no mínimo 8 caracteres. Deve conter pelo menos um
+					número, uma letra maiúscula e um caractere especial.
+				</span>
 
 				<Button
 					type="submit"

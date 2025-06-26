@@ -1,5 +1,5 @@
 export function translateSpecificProductsTableKeys(key: string): string {
-	const keysMap: Record<string, string> = {
+	const translations: Record<string, string> = {
 		brand: "Marca",
 		model: "Modelo",
 		description: "Descrição",
@@ -7,10 +7,10 @@ export function translateSpecificProductsTableKeys(key: string): string {
 		warrantyMonths: "Meses de Garantia",
 		budget: "Orçamento",
 		budgetValidity: "Validade do Orçamento",
-		baseProduct: "Produto Base",
+		baseProductId: "Produto Base",
 		createdAt: "Criado em",
-		updatedAt: "Atualizado em",
+		actions: "Ações",
 	};
 
-	return keysMap[key] || key;
+	return translations[key] || key;
 }

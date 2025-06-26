@@ -12,7 +12,7 @@ export function ProjectTypesTableHeader({
 	widths = ["w-[50px]", "w-[300px]", "w-[300px]", "w-[100px]"],
 }: ProjectTypesHeaderProps) {
 	return (
-		<TableHeader className="bg-slate-50">
+		<TableHeader className="bg-muted">
 			{table.getHeaderGroups().map((headerGroup) => (
 				<TableRow key={headerGroup.id} className="border-none">
 					{headerGroup.headers.map((header) => {

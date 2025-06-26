@@ -1,14 +1,14 @@
-import { signUpRequestSchema } from "@/@schemas/auth";
-import { signUp } from "@/api/auth/sign-up";
+import { useFormMutation } from "../common/use-form-mutation";
 import { useMutation } from "@tanstack/react-query";
+import { signUp } from "@/api/auth/sign-up";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
-import { useFormMutation } from "../common/use-form-mutation";
+import { SignUpRequestBody, signUpRequestSchema } from "@/@schemas/auth";
 
 export function useSignUp() {
 	const navigate = useNavigate();
 
-	const form = useFormMutation({
+	const form = useFormMutation<SignUpRequestBody>({
 		schema: signUpRequestSchema,
 		defaultValues: {
 			name: "",
@@ -19,6 +19,11 @@ export function useSignUp() {
 			role: "MUNICIPALITY",
 		},
 		onSubmit(data) {
+			if (data.role === "COMPANY") {
+				toast.info("O cadastro de empresa não está disponível.");
+				return;
+			}
+
 			signUpFn(data);
 		},
 	});

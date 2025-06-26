@@ -1,86 +1,62 @@
 import { z } from "zod";
+import { v4 as uuidv4 } from "uuid";
 
-const requiredDocumentSchema = z.object({
-	name: z.string().min(3, "O nome deve ter no mínimo 3 caracteres"),
+const createDocumentFieldSchema = z.object({
+	id: z.string().default(() => uuidv4()),
+	name: z.string().min(1, "Nome do campo é obrigatório"),
+	value: z.string().nullable().optional(),
+	parentId: z.string().nullable().optional(),
+});
+
+const createDocumentSchema = z.object({
+	id: z.string().default(() => uuidv4()),
+	name: z.string().min(1, "Nome do documento é obrigatório"),
+	fields: z.array(createDocumentFieldSchema).default([]),
+});
+
+const createRequiredDocumentSchema = z.object({
+	name: z.string().min(1, "Nome é obrigatório"),
+	description: z.string().min(1, "Descrição é obrigatória"),
+	model: z.string().min(1, "Modelo é obrigatório"),
+});
+
+export const opportunityRequestSchema = z.object({
+	title: z.string().min(1, "Título é obrigatório"),
 	description: z
 		.string()
 		.min(10, "A descrição deve ter no mínimo 10 caracteres"),
-	model: z.string().min(1, "O modelo é obrigatório"),
+	availableValue: z.number().min(0, "Valor mínimo deve ser maior que 0"),
+	minValue: z.number().min(0, "Valor mínimo deve ser maior que 0"),
+	responsibleAgency: z.string().min(1, "Órgão responsável é obrigatório"),
+	typeId: z.string().uuid().min(1, "Tipo é obrigatório"),
+	maxValue: z.number().min(0, "Valor máximo deve ser maior que 0"),
+	initialDeadline: z.string().min(1, "Data de início é obrigatória"),
+	finalDeadline: z.string().min(1, "Data de término é obrigatória"),
+	requiresCounterpart: z.boolean().default(false),
+	counterpartPercentage: z.coerce.number().min(0).max(100).default(0),
+	projectTypeIds: z
+		.array(z.string().uuid())
+		.min(1, "Tipo de projeto é obrigatório"),
+	requiredDocuments: z.array(createRequiredDocumentSchema).default([]),
+	documents: z.array(createDocumentSchema).default([]),
 });
 
-export const createOpportunityRequestSchema = z
-	.object({
-		title: z.string().min(3, "O título deve ter no mínimo 3 caracteres"),
-		description: z
-			.string()
-			.min(10, "A descrição deve ter no mínimo 10 caracteres"),
-		availableValue: z.number().positive("O valor disponível deve ser positivo"),
-		minValue: z.number().positive("O valor mínimo deve ser positivo"),
-		maxValue: z.number().positive("O valor máximo deve ser positivo"),
-		initialDeadline: z.coerce.date({
-			message: "Data inicial inválida",
-		}),
-		finalDeadline: z.coerce.date({
-			message: "Data final inválida",
-		}),
-		requiresCounterpart: z.boolean(),
-		counterpartPercentage: z
-			.number()
-			.min(0, "A porcentagem de contrapartida deve ser maior ou igual a 0")
-			.max(100, "A porcentagem de contrapartida deve ser menor ou igual a 100"),
-		isActive: z.boolean().default(true),
-		requiredDocuments: z
-			.array(requiredDocumentSchema)
-			.min(1, "Pelo menos um documento é obrigatório"),
-	})
-	.refine(
-		(data) => {
-			const initialDate = new Date(data.initialDeadline);
-			const finalDate = new Date(data.finalDeadline);
-			return initialDate < finalDate;
-		},
-		{
-			message: "A data inicial deve ser anterior à data final",
-			path: ["finalDeadline"],
-		}
-	)
-	.refine(
-		(data) => {
-			return data.minValue <= data.maxValue;
-		},
-		{
-			message: "O valor mínimo deve ser menor ou igual ao valor máximo",
-			path: ["maxValue"],
-		}
-	)
-	.refine(
-		(data) => {
-			return data.availableValue >= data.minValue;
-		},
-		{
-			message: "O valor disponível deve ser maior ou igual ao valor mínimo",
-			path: ["availableValue"],
-		}
-	);
-
-export type CreateOpportunityRequestSchema = z.infer<
-	typeof createOpportunityRequestSchema
->;
+export type OpportunityRequest = z.infer<typeof opportunityRequestSchema>;
 
 export const opportunitySchema = z.object({
 	id: z.string().uuid(),
+	slug: z.string(),
 	title: z.string(),
 	description: z.string(),
 	availableValue: z.number(),
 	responsibleAgency: z.string(),
-	type: z.string(),
 	minValue: z.number(),
 	maxValue: z.number(),
 	initialDeadline: z.coerce.date(),
 	finalDeadline: z.coerce.date(),
 	requiresCounterpart: z.boolean(),
 	counterpartPercentage: z.number(),
-	typeDescription: z.string(),
+	type: z.string(),
 	isActive: z.boolean(),
 	createdAt: z.coerce.date(),
 	updatedAt: z.coerce.date().nullable().optional(),
@@ -94,37 +70,25 @@ export const opportunitySchema = z.object({
 			updatedAt: z.coerce.date().nullable().optional(),
 		})
 	),
+	documents: z.array(
+		z.object({
+			id: z.string().uuid(),
+			name: z.string(),
+			fields: z.array(
+				z.object({
+					id: z.string().uuid(),
+					name: z.string(),
+					value: z.string().nullable().optional(),
+				})
+			),
+			createdAt: z.coerce.date(),
+			updatedAt: z.coerce.date().nullable().optional(),
+		})
+	),
 });
 
 export const getOpportunitiesResponseSchema = z
 	.array(opportunitySchema)
 	.nullable();
 
-export type OpportunitySchema = z.infer<typeof opportunitySchema>;
-
-export const updateOpportunityRequestSchema = z.object({
-	title: z.string().min(1).optional(),
-	description: z.string().min(1).optional(),
-	availableValue: z.number().positive().optional(),
-	minValue: z.number().positive().optional(),
-	maxValue: z.number().positive().optional(),
-	initialDeadline: z.coerce.date().optional(),
-	finalDeadline: z.coerce.date().optional(),
-	requiresCounterpart: z.boolean().optional(),
-	counterpartPercentage: z.number().min(0).max(100).optional(),
-	isActive: z.boolean().optional(),
-	requiredDocuments: z
-		.array(
-			z.object({
-				id: z.string().uuid().optional(),
-				name: z.string().min(1).optional(),
-				description: z.string().min(1).optional(),
-				model: z.string().min(1).optional(),
-			})
-		)
-		.optional(),
-});
-
-export type UpdateOpportunityRequestSchema = z.infer<
-	typeof updateOpportunityRequestSchema
->;
+export type Opportunity = z.infer<typeof opportunitySchema>;

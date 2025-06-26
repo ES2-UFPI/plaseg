@@ -1,12 +1,14 @@
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
 
 export default function Home() {
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		navigate("/entrar", { replace: true });
+	}, [navigate]);
+
 	return (
-		<div className="w-full h-screen flex items-center justify-center">
-			<Button asChild>
-				<Link to={"/entrar"}>Entrar</Link>
-			</Button>
-		</div>
+		<main className="flex flex-col w-full h-screen items-center justify-center"></main>
 	);
 }

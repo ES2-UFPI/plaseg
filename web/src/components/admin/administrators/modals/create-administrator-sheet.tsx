@@ -37,7 +37,7 @@ export function CreateAdministratorSheet({
 				</Button>
 			</SheetTrigger>
 
-			<SheetContent className="w-full md:max-w-[600px] outline-none overflow-y-auto flex flex-col">
+			<SheetContent className="w-full md:max-w-[600px] outline-none overflow-y-auto flex flex-col gap-6">
 				<SheetHeader>
 					<SheetTitle>Novo Administrador</SheetTitle>
 					<SheetDescription>

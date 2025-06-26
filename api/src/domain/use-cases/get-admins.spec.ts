@@ -1,9 +1,10 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { InMemoryUsersRepository } from "../../../test/repositories/in-memory-users-repository";
+
 import { GetAdminsUseCase } from "./get-admins";
 import { makeUser } from "../../../test/factories/make-user";
-import { Role } from "../entities/value-objects/role";
+import { InMemoryUsersRepository } from "../../../test/repositories/in-memory-users-repository";
 import { Email } from "../entities/value-objects/email";
+import { Role } from "../entities/value-objects/role";
 
 let inMemoryUsersRepository: InMemoryUsersRepository;
 let sut: GetAdminsUseCase;
@@ -15,6 +16,7 @@ describe("Get Admins Use Case", () => {
 	});
 
 	it("should be able to get all admins", async () => {
+		// Create admin users
 		const admin1 = makeUser({
 			role: Role.admin(),
 			email: Email.create("admin1@example.com"),
@@ -27,8 +29,9 @@ describe("Get Admins Use Case", () => {
 			document: "12345678902",
 		});
 
+		// Create a non-admin user
 		const member = makeUser({
-			role: Role.member(),
+			role: Role.municipality(),
 			email: Email.create("member@example.com"),
 			document: "12345678901",
 		});
@@ -54,8 +57,9 @@ describe("Get Admins Use Case", () => {
 	});
 
 	it("should return null when no admins are found", async () => {
+		// Create only non-admin users
 		const member = makeUser({
-			role: Role.member(),
+			role: Role.municipality(),
 			email: Email.create("member@example.com"),
 		});
 

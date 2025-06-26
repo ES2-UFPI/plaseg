@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowDown, ArrowUp, Eye, SquarePen } from "lucide-react";
+import { ArrowDown, ArrowUp, Eye } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { translateTypesTableKeys } from "@/utils/translate-types-table-keys";
 import { Type, TypeGroup } from "@/@types/admin/type";
 import { formatDate } from "@/utils/format-date";
 import { Tag } from "@/components/ui/tag";
+import { EditTypeSheet } from "../modals/edit-type-sheet";
 
 export const typesTableColumns: ColumnDef<Type>[] = [
 	{
@@ -127,7 +128,9 @@ export const typesTableColumns: ColumnDef<Type>[] = [
 	{
 		id: "actions",
 		header: "Ações",
-		cell: () => {
+		cell: ({ row }) => {
+			const type = row.original;
+
 			return (
 				<div className="flex items-center gap-4">
 					<Button variant="outline" size="icon" disabled>
@@ -135,10 +138,7 @@ export const typesTableColumns: ColumnDef<Type>[] = [
 						<span className="sr-only">Ver detalhes</span>
 					</Button>
 
-					<Button variant="outline" size="icon" disabled>
-						<SquarePen />
-						<span className="sr-only">Editar</span>
-					</Button>
+					<EditTypeSheet type={type} />
 				</div>
 			);
 		},

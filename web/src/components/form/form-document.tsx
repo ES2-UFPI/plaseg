@@ -8,7 +8,7 @@ import {
 	FormControl,
 	FormMessage,
 } from "@/components/ui/form";
-import { type FieldValues, type Path, type UseFormReturn } from "react-hook-form";
+import { FieldValues, Path, UseFormReturn } from "react-hook-form";
 
 interface FormDocumentInputProps<TFieldValues extends FieldValues> {
 	form: UseFormReturn<TFieldValues>;

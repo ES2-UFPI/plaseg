@@ -1,12 +1,12 @@
+import { MultiSelect } from "@/components/ui/multi-select";
 import {
-	FormControl,
 	FormField,
 	FormItem,
 	FormLabel,
+	FormControl,
 	FormMessage,
 } from "@/components/ui/form";
-import { MultiSelect } from "@/components/ui/multi-select";
-import type { FieldValues, Path, UseFormReturn } from "react-hook-form";
+import { FieldValues, Path, UseFormReturn } from "react-hook-form";
 
 interface FormMultiSelectProps<TFieldValues extends FieldValues> {
 	form: UseFormReturn<TFieldValues>;
@@ -34,6 +34,7 @@ export function FormMultiSelect<TFieldValues extends FieldValues>({
 			render={({ field }) => (
 				<FormItem className={`flex flex-col text-left ${className}`}>
 					{label && <FormLabel>{label}</FormLabel>}
+
 					<FormControl>
 						<MultiSelect
 							options={options}
@@ -44,6 +45,7 @@ export function FormMultiSelect<TFieldValues extends FieldValues>({
 							maxCount={maxCount}
 						/>
 					</FormControl>
+
 					<FormMessage />
 				</FormItem>
 			)}

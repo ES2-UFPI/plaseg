@@ -1,6 +1,6 @@
 import { HTTPSuccessResponse, HTTPErrorResponse } from "@/@types/http/http";
 import { AxiosError } from "axios";
-import { api } from "@/lib/axios";
+import { api } from "@/services/axios";
 import { UpdateAdministratorRequest } from "@/@schemas/administrator";
 import { User } from "@/@types/auth/user";
 

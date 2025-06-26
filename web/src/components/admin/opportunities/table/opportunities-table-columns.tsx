@@ -3,10 +3,10 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowDown, ArrowUp, Eye, SquarePen } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { translateOpportunitiesTableKeys } from "@/utils/translate-opportunities-table-keys";
-import { Opportunity } from "@/@types/common/opportunity";
 import { formatDate } from "@/utils/format-date";
 import { Tag } from "@/components/ui/tag";
 import { Switch } from "@/components/ui/switch";
+import { Opportunity } from "@/@schemas/opportunity";
 
 export const opportunitiesTableColumns: ColumnDef<Opportunity>[] = [
 	{
@@ -49,7 +49,7 @@ export const opportunitiesTableColumns: ColumnDef<Opportunity>[] = [
 			</Button>
 		),
 		cell: ({ row }) => (
-			<div className="capitalize font-semibold">{row.getValue("title")}</div>
+			<div className="font-semibold">{row.getValue("title")}</div>
 		),
 	},
 	{

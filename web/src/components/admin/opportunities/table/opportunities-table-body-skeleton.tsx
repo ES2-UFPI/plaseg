@@ -10,11 +10,11 @@ export function OpportunitiesTableBodySkeleton({
 }: OpportunitiesTableSkeletonProps) {
 	return (
 		<>
-			{Array.from({ length: 10 }).map(() => (
-				<TableRow className="border-none">
-					{Array.from({ length: 7 }).map((_, i) => (
-						<TableCell key={i} className="h-14">
-							<Skeleton className={`h-5 ${widths[i] || "w-full"}`} />
+			{Array.from({ length: 10 }).map((_, i) => (
+				<TableRow key={i} className="border-none">
+					{Array.from({ length: 7 }).map((_, j) => (
+						<TableCell key={j} className="h-14">
+							<Skeleton className={`h-5 ${widths[j] || "w-full"}`} />
 						</TableCell>
 					))}
 				</TableRow>

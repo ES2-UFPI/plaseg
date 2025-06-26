@@ -1,4 +1,3 @@
-"use client";
 import * as React from "react";
 import {
 	ColumnFiltersState,
@@ -23,12 +22,7 @@ import { TablePagination } from "@/components/table/table-footer";
 import { TableHideColumnsDropDown } from "@/components/table/table-hide-columns-dropdown";
 
 export function OpportunitiesTableContainer() {
-	const [sorting, setSorting] = React.useState<SortingState>([
-		{
-			id: "maxFundingAmount",
-			desc: true,
-		},
-	]);
+	const [sorting, setSorting] = React.useState<SortingState>([]);
 	const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
 		[]
 	);
@@ -88,9 +82,7 @@ export function OpportunitiesTableContainer() {
 					]}
 					className="w-full xl:w-[200px]"
 					placeholder="Tipo"
-					onChange={(value) =>
-						table.getColumn("typeDescription")?.setFilterValue(value)
-					}
+					onChange={(value) => table.getColumn("type")?.setFilterValue(value)}
 				/>
 
 				<Button

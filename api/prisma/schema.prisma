@@ -22,6 +22,7 @@ enum Role {
   ADMIN
   MUNICIPALITY
   ADMIN_MASTER
+  COMPANY
 }
 
 enum TypeGroup {
@@ -86,6 +87,7 @@ model Municipality {
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
+  Project   Project[]
 
   @@map("municipalities")
 }
@@ -98,8 +100,9 @@ model AllocationDepartment {
   municipalityId String
   municipality   Municipality @relation(fields: [municipalityId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime?       @updatedAt
+  RequestedItem RequestedItem[]
 
   @@map("allocation_departments")
 }
@@ -112,8 +115,9 @@ model MaintenanceContract {
   municipalityId String
   municipality   Municipality @relation(fields: [municipalityId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime?       @updatedAt
+  RequestedItem RequestedItem[]
 
   @@map("maintenance_contracts")
 }
@@ -219,13 +223,51 @@ model Opportunity {
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
 
-  Type   Type   @relation(fields: [typeId], references: [id], onDelete: Cascade)
+  type   Type   @relation(fields: [typeId], references: [id], onDelete: Cascade)
   typeId String
 
-  requiredDocuments RequiredDocument[]
-  documents         Document[]
+  requiredDocuments      RequiredDocument[]
+  projects               Project[]
+  documents              Document[]
+  OpportunityProjectType OpportunityProjectType[]
 
   @@map("opportunities")
+}
+
+model OpportunityProjectType {
+  id            String      @id @default(uuid())
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  opportunityId String
+  projectType   ProjectType @relation(fields: [projectTypeId], references: [id], onDelete: Cascade)
+  projectTypeId String
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@unique([opportunityId, projectTypeId])
+  @@map("opportunity_project_types")
+}
+
+model RequestedItem {
+  id       String  @id @default(uuid())
+  quantity Decimal
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  baseProduct   BaseProduct @relation(fields: [baseProductId], references: [id], onDelete: Cascade)
+  baseProductId String
+
+  allocationDepartment   AllocationDepartment? @relation(fields: [allocationDepartmentId], references: [id], onDelete: Cascade)
+  allocationDepartmentId String?
+
+  maintenanceContract   MaintenanceContract? @relation(fields: [maintenanceContractId], references: [id], onDelete: Cascade)
+  maintenanceContractId String?
+
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String
+
+  @@map("requested_itens")
 }
 
 model BaseProduct {
@@ -246,8 +288,9 @@ model BaseProduct {
 
   SpecificProduct SpecificProduct[]
 
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime?       @updatedAt
+  RequestedItem RequestedItem[]
 
   @@map("base_products")
 }
@@ -300,7 +343,58 @@ model Document {
   opportunity   Opportunity? @relation(fields: [opportunityId], references: [id])
   opportunityId String?
 
-  fields Field[]
+  projectType   ProjectType? @relation(fields: [projectTypeId], references: [id])
+  projectTypeId String?
+
+  fields  Field[]
+  Project Project[]
 
   @@map("documents")
+}
+
+model ProjectType {
+  id   String @id @default(uuid())
+  name String @unique
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  documents              Document[]
+  Project                Project[]
+  OpportunityProjectType OpportunityProjectType[]
+
+  @@map("project_types")
+}
+
+model Project {
+  id                            String   @id @default(uuid())
+  title                         String
+  responsibleCpf                String?
+  responsibleName               String?
+  responsibleEmail              String?
+  responsiblePhone              String?
+  counterpartCapitalItem        String?
+  counterpartCapitalValue       Decimal?
+  counterpartOperatingCostCode  String?
+  counterpartOperatingCostValue Decimal?
+  totalValue                    Decimal?
+  requestedValue                Decimal?
+  baseValue                     Decimal?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  projectType   ProjectType @relation(fields: [projectTypeId], references: [id], onDelete: Cascade)
+  projectTypeId String
+
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  opportunityId String
+
+  municipality   Municipality @relation(fields: [municipalityId], references: [id], onDelete: Cascade)
+  municipalityId String
+
+  documents      Document[]
+  requestedItems RequestedItem[]
+
+  @@map("projects")
 }

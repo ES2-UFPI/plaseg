@@ -1,6 +1,6 @@
-import { Opportunity } from "@/@types/common/opportunity";
 import { TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { flexRender, Table } from "@tanstack/react-table";
+import { Opportunity } from "@/@schemas/opportunity";
 
 interface OpportunitiesTableHeaderProps {
 	table: Table<Opportunity>;
@@ -20,7 +20,7 @@ export function OpportunitiesTableHeader({
 	],
 }: OpportunitiesTableHeaderProps) {
 	return (
-		<TableHeader>
+		<TableHeader className="bg-muted">
 			{table.getHeaderGroups().map((headerGroup) => (
 				<TableRow key={headerGroup.id} className="border-none">
 					{headerGroup.headers.map((header) => {

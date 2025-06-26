@@ -13,7 +13,7 @@ export function translateOpportunitiesTableKeys(key: string): string {
 		requiredDocuments: "Documentos Necessários",
 		createdAt: "Criado em",
 		updatedAt: "Atualizado em",
-		typeDescription: "Tipo",
+		type: "Tipo",
 		isActive: "Ativo",
 		actions: "Ações",
 	};

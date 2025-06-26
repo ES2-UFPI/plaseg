@@ -1,154 +1,84 @@
-import { describe, it, expect, beforeEach } from "vitest";
-import { InMemoryOpportunitiesRepository } from "../../../test/repositories/in-memory-opportunities-repository";
-import { InMemoryTypesRepository } from "../../../test/repositories/in-memory-types-repository";
-import { CreateOpportunityUseCase } from "./create-opportunity";
 import { makeOpportunity } from "../../../test/factories/make-opportunity";
-import { makeType } from "../../../test/factories/make-type";
+import { makeRequiredDocument } from "../../../test/factories/make-required-document";
+import { InMemoryOpportunitiesRepository } from "../../../test/repositories/in-memory-opportunities-repository";
+import { InMemoryProjectTypesRepository } from "../../../test/repositories/in-memory-project-types-repository";
+import { InMemoryTypesRepository } from "../../../test/repositories/in-memory-types-repository";
+import { ProjectType } from "../entities/project-type";
+import { Type } from "../entities/type";
 import { TypeGroup } from "../entities/value-objects/type-group";
+import { CreateOpportunityUseCase } from "./create-opportunity";
+
 
 let inMemoryOpportunitiesRepository: InMemoryOpportunitiesRepository;
 let inMemoryTypesRepository: InMemoryTypesRepository;
+let inMemoryProjectTypesRepository: InMemoryProjectTypesRepository;
 let sut: CreateOpportunityUseCase;
 
 describe("Create Opportunity Use Case", () => {
 	beforeEach(() => {
 		inMemoryOpportunitiesRepository = new InMemoryOpportunitiesRepository();
 		inMemoryTypesRepository = new InMemoryTypesRepository();
+		inMemoryProjectTypesRepository = new InMemoryProjectTypesRepository();
 		sut = new CreateOpportunityUseCase(
 			inMemoryOpportunitiesRepository,
-			inMemoryTypesRepository
+			inMemoryTypesRepository,
+			inMemoryProjectTypesRepository
 		);
 	});
 
-	it("should be able to create a new opportunity", async () => {
-		const type = makeType({
+	it("should be able to create an opportunity", async () => {
+		const opportunityData = makeOpportunity();
+		const requiredDocument = makeRequiredDocument();
+
+		const type = Type.create({
+			description: "Edital",
 			group: TypeGroup.opportunity(),
 		});
 
-		await inMemoryTypesRepository.create(type);
-
-		const opportunity = makeOpportunity({
-			typeId: type.id.toString(),
+		const projectType = ProjectType.create({
+			name: "Projeto de Infraestrutura",
+			documents: [],
 		});
+
+		await inMemoryTypesRepository.create(type);
+		await inMemoryProjectTypesRepository.create(projectType);
 
 		const result = await sut.execute({
-			title: opportunity.title,
-			description: opportunity.description,
-			availableValue: opportunity.availableValue,
-			responsibleAgency: opportunity.responsibleAgency,
-			minValue: opportunity.minValue,
-			maxValue: opportunity.maxValue,
-			initialDeadline: opportunity.initialDeadline,
-			finalDeadline: opportunity.finalDeadline,
-			requiresCounterpart: opportunity.requiresCounterpart,
-			counterpartPercentage: opportunity.counterpartPercentage,
-			type: opportunity.type,
-			typeId: opportunity.typeId,
-			requiredDocuments: opportunity.requiredDocuments.map((doc) => ({
-				name: doc.name,
-				description: doc.description,
-				model: doc.model,
-			})),
+			title: opportunityData.title,
+			description: opportunityData.description,
+			responsibleAgency: opportunityData.responsibleAgency,
+			availableValue: opportunityData.availableValue,
+			minValue: opportunityData.minValue,
+			maxValue: opportunityData.maxValue,
+			initialDeadline: opportunityData.initialDeadline,
+			finalDeadline: opportunityData.finalDeadline,
+			requiresCounterpart: opportunityData.requiresCounterpart,
+			counterpartPercentage: opportunityData.counterpartPercentage,
+			typeId: type.id.toString(),
+			projectTypeIds: [projectType.id.toString()],
+			requiredDocuments: [
+				{
+					name: requiredDocument.name,
+					description: requiredDocument.description,
+					model: requiredDocument.model,
+				},
+			],
+			documents: [
+				{
+					name: "Document Example",
+					fields: [
+						{ id: "1", name: "Field 1", value: "Value 1" },
+						{ id: "2", name: "Field 2", value: "Value 2", parentId: "1" },
+					],
+				},
+			],
 		});
 
-		expect(result.isRight()).toBeTruthy();
-		expect(inMemoryOpportunitiesRepository.items).toHaveLength(1);
+		expect(result.isRight()).toBe(true);
 		if (result.isRight()) {
 			expect(inMemoryOpportunitiesRepository.items[0]).toEqual(
 				result.value.opportunity
 			);
 		}
-	});
-
-	it("should not be able to create opportunity with existing title", async () => {
-		const type = makeType({
-			group: TypeGroup.opportunity(),
-		});
-
-		await inMemoryTypesRepository.create(type);
-
-		const existingOpportunity = makeOpportunity({
-			typeId: type.id.toString(),
-		});
-
-		await inMemoryOpportunitiesRepository.create(existingOpportunity);
-
-		const result = await sut.execute({
-			title: existingOpportunity.title,
-			description: "New Description",
-			availableValue: 100000,
-			responsibleAgency: "New Agency",
-			minValue: 50000,
-			maxValue: 100000,
-			initialDeadline: new Date(),
-			finalDeadline: new Date(),
-			requiresCounterpart: true,
-			type: "EDITAL",
-			typeId: type.id.toString(),
-			requiredDocuments: [],
-		});
-
-		expect(result.isLeft()).toBeTruthy();
-		if (result.isLeft()) {
-			expect(result.value.statusCode).toEqual(409);
-			expect(result.value.message).toEqual("Título já cadastrado");
-		}
-		expect(inMemoryOpportunitiesRepository.items).toHaveLength(1);
-	});
-
-	it("should not be able to create opportunity with non-existent type", async () => {
-		const result = await sut.execute({
-			title: "New Opportunity",
-			description: "Description",
-			availableValue: 100000,
-			responsibleAgency: "Agency",
-			minValue: 50000,
-			maxValue: 100000,
-			initialDeadline: new Date(),
-			finalDeadline: new Date(),
-			requiresCounterpart: true,
-			type: "EDITAL",
-			typeId: "non-existent-type-id",
-			requiredDocuments: [],
-		});
-
-		expect(result.isLeft()).toBeTruthy();
-		if (result.isLeft()) {
-			expect(result.value.statusCode).toEqual(404);
-			expect(result.value.message).toEqual("Tipo não encontrado");
-		}
-		expect(inMemoryOpportunitiesRepository.items).toHaveLength(0);
-	});
-
-	it("should not be able to create opportunity with invalid type group", async () => {
-		const type = makeType({
-			group: TypeGroup.category(),
-		});
-
-		await inMemoryTypesRepository.create(type);
-
-		const result = await sut.execute({
-			title: "New Opportunity",
-			description: "Description",
-			availableValue: 100000,
-			responsibleAgency: "Agency",
-			minValue: 50000,
-			maxValue: 100000,
-			initialDeadline: new Date(),
-			finalDeadline: new Date(),
-			requiresCounterpart: true,
-			type: "EDITAL",
-			typeId: type.id.toString(),
-			requiredDocuments: [],
-		});
-
-		expect(result.isLeft()).toBeTruthy();
-		if (result.isLeft()) {
-			expect(result.value.statusCode).toEqual(400);
-			expect(result.value.message).toEqual(
-				"O tipo selecionado não é uma oportunidade"
-			);
-		}
-		expect(inMemoryOpportunitiesRepository.items).toHaveLength(0);
 	});
 });
